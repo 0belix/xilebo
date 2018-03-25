@@ -4,16 +4,23 @@
   "description": "Speedway template",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/1dv430/pj222kn-project.git"
   },
   "author": "Pierre Johansson",
-  "license": "ISC",
+  "license": "Apache License 2.0",
   "bugs": {
     "url": "https://github.com/1dv430/pj222kn-project/issues"
   },
-  "homepage": "https://github.com/1dv430/pj222kn-project#readme"
+  "homepage": "https://github.com/1dv430/pj222kn-project#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11",
+    "pug": "^2.0.3"
+  }
 }

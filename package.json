@@ -1,0 +1,19 @@
+{
+  "name": "speedway",
+  "version": "1.0.0",
+  "description": "Speedway template",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv430/pj222kn-project.git"
+  },
+  "author": "Pierre Johansson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv430/pj222kn-project/issues"
+  },
+  "homepage": "https://github.com/1dv430/pj222kn-project#readme"
+}

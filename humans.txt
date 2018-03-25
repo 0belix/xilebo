@@ -5,12 +5,12 @@
 	From: Sweden
 
 /* THANKS */
-	Linn�universitetet
+	Linnéuniversitetet
 	From: Kalmar, Sweden
 		
 
 /* SITE */
-	Last update: 2017/11/09
+	Last update: 2018/03/25
 	Language: Swedish / English
 	Doctype: HTML5
 	IDE: Notepad++, Visual Studio Code

@@ -6,8 +6,13 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const expressValidator = require('express-validator')
+const flash = require('connect-flash')
+const session = require('express-session')
+const passport = require('passport')
+const config = require('./config/database')
 
-mongoose.connect('mongodb://localhost/speedway')
+mongoose.connect(config.database)
 let db = mongoose.connection
 
 // Check connection
@@ -36,6 +41,54 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// Set Public Folder
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Express Session Middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use((req, res, next) => {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+// Express Validator Middleware
+app.use(expressValidator({
+  errorFormatter: (param, msg, value) => {
+    let namespace = param.split('.'),
+    root = namespace.shift(),
+    formParam = root
+
+    while (namespace.length) {
+      formParam += '[' + namespace.shift() + ']'
+    }
+
+    return {
+      param: formParam,
+      msg: msg,
+      value: value
+    }
+  }
+}))
+
+// Passport Config
+require('./config/passport')(passport)
+// Passport Middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Global variable for the user objects
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null
+  next()
+})
+
 // Home Route
 app.get('/', (req, res) => {
   Club.find({}, (err, clubs) => {
@@ -49,27 +102,11 @@ app.get('/', (req, res) => {
   })
 })
 
-// Add Route
-app.get('/club/add', (req, res) => {
-  res.render('add_club')
-})
-
-// Add Submit POST Route
-app.post('/club/add', (req, res) => {
-  let club = new Club()
-  club.name = req.body.name
-  club.author = req.body.author
-  club.misc = req.body.misc
-
-  club.save((err) => {
-    if (err) {
-      console.log(err)
-      return
-    } else {
-      res.redirect('/')
-    }
-  })
-})
+// Route Files
+let clubs = require('./routes/clubs')
+let users = require('./routes/users')
+app.use('/clubs', clubs)
+app.use('/users', users)
 
 // Start Server
 app.listen(3000, () => {

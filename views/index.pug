@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1 Clubs
-  ul
+  ul.list-group
     each club, i in clubs
-      li= club.name 
+      li.list-group-item
+        a(href='/clubs/' + club._id)= club.name

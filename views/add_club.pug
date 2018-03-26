@@ -1,15 +1,13 @@
 extends layout
 
 block content
-  h1 Add a Club
-  form(method='POST', action='/club/add')
+  h1 Add Club
+  form(method='POST', action='/clubs/add')
     #form-group
       label Name:
       input.form-control(name='name', type='text')
     #form-group
-      label Author:
-      input.form-control(name='author', type='text')
-    #form-group
       label Misc:
       textarea.form-control(name='misc')
+    br
     input.btn.btn-primary(type='submit', value='Submit')

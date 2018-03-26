@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= club.name
+  p= club.misc
+  hr
+  if user
+    if user.id == club.author
+      a.btn.btn-warning(href='/clubs/edit/' + club._id) Edit
+      a.btn.btn-danger.delete-club(href='#', data-id = club._id) Delete

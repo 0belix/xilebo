@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Klubbar
+  ul.list-group
+    each club, i in clubs
+      li.list-group-item
+        a(href='/clubs/' + club._id)= club.name
+  if user
+    br
+    a.btn.btn-primary(href='/clubs/add') Add

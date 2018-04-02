@@ -8,6 +8,18 @@ const clubSchema = mongoose.Schema({
     type: String,
     require: true
   },
+  teamleader1: {
+    type: String,
+    require: false
+  },
+  teamleader2: {
+    type: String,
+    require: false
+  },
+  trackrecord: {
+    type: Number,
+    require: false
+  },
   misc: {
     type: String,
     require: false

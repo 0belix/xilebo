@@ -7,6 +7,15 @@ block content
       label Name:
       input.form-control(name='name', type='text', value=club.name)
     #form-group
+      label Lagledare:
+      input.form-control(name='teamleader1', type='text', value=club.teamleader1)
+    #form-group
+      label Lagledare, ställföreträdare:
+      input.form-control(name='teamleader2', type='text', value=club.teamleader2)
+    #form-group
+      label Banrekord:
+      input.form-control(name='trackrecord', type='number', value=club.trackrecord, step='0.1')
+    #form-group
       label Misc:
       textarea.form-control(name='misc')= club.misc
     br

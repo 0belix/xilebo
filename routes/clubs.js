@@ -7,6 +7,19 @@ const router = express.Router()
 let Club  = require('../models/club')
 let User  = require('../models/user')
 
+// Home Route
+router.get('/', (req, res) => {
+  Club.find({}, (err, clubs) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.render('clubs', {
+        clubs: clubs
+      })
+    }
+  })
+})
+
 // Add Route
 router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('add_club')
@@ -15,7 +28,6 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 // Add Submit POST Route
 router.post('/add', (req, res) => {
   req.checkBody('name', 'Name is required').notEmpty()
-  req.checkBody('misc', 'Misc is required').notEmpty()
 
   // Get Errors
   let errors = req.validationErrors()
@@ -27,6 +39,9 @@ router.post('/add', (req, res) => {
   } else {
     let club = new Club()
     club.name = req.body.name
+    club.teamleader1 = req.body.teamleader1
+    club.teamleader2 = req.body.teamleader2
+    club.trackrecord = req.body.trackrecord
     club.misc = req.body.misc
     club.author = req.user._id
   
@@ -60,6 +75,9 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 router.post('/edit/:id', (req, res) => {
   let club = {}
   club.name = req.body.name
+  club.teamleader1 = req.body.teamleader1
+  club.teamleader2 = req.body.teamleader2
+  club.trackrecord = req.body.trackrecord
   club.misc = req.body.misc
   club.author = req.user._id
 

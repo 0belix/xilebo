@@ -6,28 +6,30 @@ html
     link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet' href='/css/style.css')
   body
-    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
-      a.navbar-brand(href='/') Speedway
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+    nav.navbar.navbar-dark.navbar-expand-md.bg-dark.justify-content-center
+      a.navbar-brand.mr-0(href='/') Speedway
+      button.navbar-toggler.ml-1(type='button', data-toggle='collapse', data-target='#collapsingNavbar')
         span.navbar-toggler-icon
-      #navbarsExampleDefault.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
+      #collapsingNavbar.navbar-collapse.collapse.justify-content-between.align-items-center.w-100
+        ul.navbar-nav.mx-auto.text-center
           li.nav-item
-            a.nav-link(href='/') Home
+            a.nav-link(href='/') Protokoll
+          li.nav-item
+            a.nav-link(href='/') Förare
+          li.nav-item
+            a.nav-link(href='/clubs') Klubbar
+        ul.nav.navbar-nav.flex-row.justify-content-center.flex-nowrap
           if user
-            li.nav-item
-              a.nav-link(href='/clubs/add') Add Club
-        ul.navbar-nav.navbar-right.mr-auto
-          if user
-            li.nav-item
-              a.nav-link(href='/users/logout') Logout
-          else
-            //-
+            if user._id == '5ab908f9d6672518b8e57a08'
               li.nav-item
                 a.nav-link.disabled(href='/users/register') Register
             li.nav-item
+              a.nav-link(href='/users/logout') Logout
+          else
+            li.nav-item
               a.nav-link(href='/users/login') Login
     .container
+      br
       != messages('message', locals)
       if errors
         each error, i in errors

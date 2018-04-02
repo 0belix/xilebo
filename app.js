@@ -29,7 +29,6 @@ db.on('error', (error) => {
 const app = express()
 
 // Bring in Models
-let Club  = require('./models/club')
 
 // Load View Engine (templates)
 app.set('views', path.join(__dirname, 'views'))
@@ -91,15 +90,7 @@ app.get('*', (req, res, next) => {
 
 // Home Route
 app.get('/', (req, res) => {
-  Club.find({}, (err, clubs) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.render('index', {
-        clubs: clubs
-      })
-    }
-  })
+  res.render('index')
 })
 
 // Route Files

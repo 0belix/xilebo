@@ -95,8 +95,10 @@ app.get('/', (req, res) => {
 
 // Route Files
 let clubs = require('./routes/clubs')
+let drivers = require('./routes/drivers')
 let users = require('./routes/users')
 app.use('/clubs', clubs)
+app.use('/drivers', drivers)
 app.use('/users', users)
 
 // Start Server

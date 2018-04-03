@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1= club.name
+  if club.teamleader1 != ''
+    p= 'Lagledare: '+ club.teamleader1
+  if club.teamleader2 != ''
+    p= 'Ställföreträdare: '+ club.teamleader2
+  if club.trackrecord != null
+    p= 'Banrekord: '+ club.trackrecord
+  if club.misc != ''
+    p= 'Övrigt: '+ club.misc
+  hr
+  if user
+    if user.id == club.author
+      a.btn.btn-warning(href='/clubs/edit/' + club._id) Edit
+      | &nbsp;&nbsp;&nbsp;
+      a.btn.btn-danger.delete-club(href='#', data-id = club._id) Delete

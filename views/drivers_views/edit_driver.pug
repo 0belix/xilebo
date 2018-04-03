@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  h1 Edit Driver
+  form(method='POST', action='/drivers/edit/' + driver._id)
+    #form-group
+      label Förnamn:
+      input.form-control(name='firstname', type='text', value=driver.firstname)
+    #form-group
+      label Efternamn:
+      input.form-control(name='lastname', type='text', value=driver.lastname)
+    #form-group
+      label Klubb:
+      input.form-control(name='driversfor', type='text', value=driver.driversfor)
+    #form-group
+      label Började:
+      input.form-control(name='joined', type='text', value=driver.joined)
+    #form-group
+      label Slutade:
+      input.form-control(name='vacated', type='text', value=driver.vacated)
+    #form-group
+      label Lag Kapten:
+      input.form-control(name='teamcaptain', type='text', value=driver.teamcaptain)
+    #form-group
+      label Övrigt:
+      textarea.form-control(name='misc')= driver.misc
+    br
+    input.btn.btn-primary(type='submit', value='Submit')

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1.display-1 Förare
+  ul.list-group
+    each driver, i in drivers
+      li.list-group-item
+        a(href='/drivers/' + driver._id)= driver.firstname + ' ' + driver.lastname
+  if user
+    br
+    a.btn.btn-primary(href='/drivers/add') Add

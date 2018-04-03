@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.render('clubs', {
+      res.render('clubs_views/clubs', {
         clubs: clubs
       })
     }
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
 // Add Route
 router.get('/add', ensureAuthenticated, (req, res) => {
-  res.render('add_club')
+  res.render('clubs_views/add_club')
 })
 
 // Add Submit POST Route
@@ -33,7 +33,7 @@ router.post('/add', (req, res) => {
   let errors = req.validationErrors()
 
   if (errors) {
-    res.render('add_club', {
+    res.render('clubs_views/add_club', {
       errors: errors
     })
   } else {
@@ -51,7 +51,7 @@ router.post('/add', (req, res) => {
         return
       } else {
         req.flash('success', 'Club Added')
-        res.redirect('/')
+        res.redirect('/clubs')
       }
     })
   }
@@ -62,9 +62,9 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   Club.findById(req.params.id, (err, club) => {
     if (club.author != req.user._id) {
       req.flash('danger', 'Not Authorized')
-      res.redirect('/')
+      res.redirect('/clubs')
     } else {
-      res.render('edit_club', {
+      res.render('clubs_views/edit_club', {
         club: club
       })
     }
@@ -89,7 +89,7 @@ router.post('/edit/:id', (req, res) => {
       return
     } else {
       req.flash('success', 'Club Updated')
-      res.redirect('/')
+      res.redirect('/clubs/' + req.params.id)
     }
   })
 })
@@ -98,7 +98,7 @@ router.post('/edit/:id', (req, res) => {
 router.get('/:id', (req, res) => {
   Club.findById(req.params.id, (err, club) => {
     User.findById(club.author, (err, user) => {
-      res.render('club', {
+      res.render('clubs_views/club', {
         club: club,
         author: user.name
       })

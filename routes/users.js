@@ -1,6 +1,6 @@
 'use strict'
 
-/* TODO: Add following function: edit user, delete user, limit registration only by owner. */
+/* TODO: Add following function: edit user, delete user, a user page. */
 
 const express = require('express')
 const router = express.Router()
@@ -12,7 +12,7 @@ let User  = require('../models/user')
 
 // Register Form
 router.get('/register', ensureAuthenticated, (req, res) => {
-  res.render('register')
+  res.render('users_views/register')
 })
 
 // Register Proccess
@@ -30,12 +30,13 @@ router.post('/register', (req, res) => {
   req.checkBody('email2', 'Emails do not match').equals(req.body.email)
   req.checkBody('username', 'Username is required').notEmpty()
   req.checkBody('password', 'Password is required').notEmpty()
+  req.checkBody('password', 'Password is to short').isLength(6)
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password)
 
   let errors = req.validationErrors()
 
   if (errors) {
-    res.render('register', {
+    res.render('users_views/register', {
       errors: errors
     })
   } else {
@@ -68,7 +69,7 @@ router.post('/register', (req, res) => {
 
 // Login Form
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.render('users_views/login')
 })
 
 // Login Process

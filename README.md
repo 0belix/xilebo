@@ -6,3 +6,5 @@
 * Pug Templating
 * Passport.js Authentication
 * BCrypt Hashing
+
+![Speedway template](https://i.imgur.com/VX1kLWq.png "Speedway template")

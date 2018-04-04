@@ -11,7 +11,7 @@ const passport = require('passport')
 let User  = require('../models/user')
 
 // Register Form
-router.get('/register', (req, res) => {
+router.get('/register', ensureAuthenticated, (req, res) => {
   res.render('users_views/register')
 })
 

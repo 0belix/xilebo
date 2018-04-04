@@ -22,11 +22,11 @@ html
         ul.nav.navbar-nav.flex-row.justify-content-center.flex-nowrap
           if user
             if user._id == '5ab908f9d6672518b8e57a08'
-              li.nav-item
-                a.nav-link.disabled(href='/users/register') Register
             li.nav-item
               a.nav-link(href='/users/logout') Logout
           else
+            li.nav-item
+              a.nav-link.disabled(href='/users/register') Register
             li.nav-item
               a.nav-link(href='/users/login') Login
     .container

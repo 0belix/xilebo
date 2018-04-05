@@ -93,6 +93,11 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+// CV Route
+app.get('/cv', (req, res) => {
+  res.render('cv')
+})
+
 // Route Files
 let clubs = require('./routes/clubs')
 let drivers = require('./routes/drivers')

@@ -4,24 +4,46 @@ block content
   h1 Redigera förare
   form(method='POST', action='/drivers/edit/' + driver._id)
     #form-group
+      br
       label Förnamn:
       input.form-control(name='firstname', type='text', value=driver.firstname)
     #form-group
+      br
       label Efternamn:
       input.form-control(name='lastname', type='text', value=driver.lastname)
     #form-group
+      br
       label Klubb:
       input.form-control(name='driversfor', type='text', value=driver.driversfor)
+    .row
+      .col-3
+        #form-group
+          br
+          label Började:
+          if driver.joined != null
+            -let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            input.form-control(name='joined', type='date', value=driver.joined.toLocaleDateString('sv-SE', options))
+          else
+            input.form-control(name='joined', type='date')
+    .row
+      .col-3
+        #form-group
+          br
+          label Slutade:
+          if driver.vacated != null
+            -let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            input.form-control(name='vacated', type='date', value=driver.vacated.toLocaleDateString('sv-SE', options))
+          else
+            input.form-control(name='vacated', type='date')
+    .form-check
+      br
+      if driver.teamcaptain == 'on'
+        input.form-check-input(name='teamcaptain', type='checkbox', checked)
+      else
+        input.form-check-input(name='teamcaptain', type='checkbox')
+      label.form-check-label(for='teamcaptain') Lagkapten
     #form-group
-      label Började:
-      input.form-control(name='joined', type='text', value=driver.joined)
-    #form-group
-      label Slutade:
-      input.form-control(name='vacated', type='text', value=driver.vacated)
-    #form-group
-      label Lag Kapten:
-      input.form-control(name='teamcaptain', type='text', value=driver.teamcaptain)
-    #form-group
+      br
       label Övrigt:
       textarea.form-control(name='misc')= driver.misc
     br

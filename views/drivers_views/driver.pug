@@ -3,13 +3,15 @@ extends ../layout
 block content
   h1= driver.firstname + ' ' + driver.lastname
   if driver.drivesfor != ''
-    p= 'Klubb: '+ driver.drivesfor
-  if driver.joined != ''
-    p= 'Började: '+ driver.joined
-  if driver.vacated != ''
-    p= 'Slutade: '+ driver.vacated
-  if driver.teamcaptain != ''
-    p= 'Lag Kapten: '+ driver.teamcaptain
+    p= 'Klubb: '+ driver.driversfor
+  if driver.joined != null
+    p= 'Började: '+ driver.joined.toLocaleDateString('sv-SE')
+  if driver.vacated != null
+    p= 'Slutade: '+ driver.vacated.toLocaleDateString('sv-SE')
+  if driver.teamcaptain == 'on'
+    p= 'Lagkapten: ✔'
+  -//else
+    -//p= 'Lagkapten: ✘'
   if driver.misc != ''
     p= 'Övrigt: '+ driver.misc
   hr

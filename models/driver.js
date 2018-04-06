@@ -17,11 +17,11 @@ const driverSchema = mongoose.Schema({
     require: true
   },
   joined: {
-    type: String,
+    type: Date,
     require: true
   },
   vacated: {
-    type: String,
+    type: Date,
     require: false
   },
   teamcaptain: {

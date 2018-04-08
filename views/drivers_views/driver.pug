@@ -3,7 +3,7 @@ extends ../layout
 block content
   h1= driver.firstname + ' ' + driver.lastname
   if driver.drivesfor != ''
-    p= 'Klubb: '+ driver.driversfor
+    p= 'Klubb: '+ driversfor
   if driver.joined != null
     p= 'Började: '+ driver.joined.toLocaleDateString('sv-SE')
   if driver.vacated != null

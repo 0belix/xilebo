@@ -13,10 +13,8 @@ block content
       label Klubb:
       select.form-control(name='driversfor')
         option()
-        option(value='Dackarna') Dackarna
-        option(value='Vetlanda Speedway') Vetlanda Speedway
-        option(value='Indianerna') Indianerna
-        option(value='Masarna') Masarna
+        each club, i in clubs
+          option(value=club._id)= club.name
     .row
       .col-3
         .form-group

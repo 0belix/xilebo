@@ -4,6 +4,7 @@ const express = require('express')
 const router = express.Router()
 
 // Bring in Models
+let Club  = require('../models/club')
 let Driver  = require('../models/driver')
 let User  = require('../models/user')
 
@@ -22,7 +23,15 @@ router.get('/', (req, res) => {
 
 // Add Route
 router.get('/add', ensureAuthenticated, (req, res) => {
-  res.render('drivers_views/add_driver')
+  Club.find({}, (err, clubs) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.render('drivers_views/add_driver', {
+        clubs: clubs
+      })
+    }
+  })
 })
 
 // Add Submit POST Route
@@ -69,8 +78,15 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
       req.flash('danger', 'Not Authorized')
       res.redirect('/drivers')
     } else {
-      res.render('drivers_views/edit_driver', {
-        driver: driver
+      Club.find({}, (err, clubs) => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.render('drivers_views/edit_driver', {
+            driver: driver,
+            clubs: clubs
+          })
+        }
       })
     }
   })
@@ -104,10 +120,10 @@ router.post('/edit/:id', (req, res) => {
 // Get Single Driver
 router.get('/:id', (req, res) => {
   Driver.findById(req.params.id, (err, driver) => {
-    User.findById(driver.author, (err, user) => {
+    Club.findById(driver.driversfor, (err, club) => {
       res.render('drivers_views/driver', {
         driver: driver,
-        author: user.name
+        driversfor: club.name
       })
     })
   })

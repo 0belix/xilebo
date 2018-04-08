@@ -11,7 +11,13 @@ block content
       input.form-control(name='lastname', type='text', value=driver.lastname)
     .form-group
       label Klubb:
-      input.form-control(name='driversfor', type='text', value=driver.driversfor)
+      select.form-control(name='driversfor', value=driver.driversfor)
+        option()
+        each club, i in clubs
+          if club._id == driver.driversfor
+            option(value=club._id, selected)= club.name
+          else
+            option(value=club._id)= club.name
     .row
       .col-3
         .form-group

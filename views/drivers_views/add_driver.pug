@@ -12,7 +12,7 @@ block content
     .form-group
       label Klubb:
       select.form-control(name='driversfor')
-        option()
+        option(selected) Välj...
         each club, i in clubs
           option(value=club._id)= club.name
     .row

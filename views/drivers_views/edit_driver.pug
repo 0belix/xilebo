@@ -12,7 +12,6 @@ block content
     .form-group
       label Klubb:
       select.form-control(name='driversfor', value=driver.driversfor)
-        option()
         each club, i in clubs
           if club._id == driver.driversfor
             option(value=club._id, selected)= club.name

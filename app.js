@@ -1,5 +1,3 @@
-/* jshint asi: true, browser: true, expr: true, node: true, esversion: 6 */
-
 'use strict'
 
 const express = require('express')
@@ -101,9 +99,11 @@ app.get('/cv', (req, res) => {
 // Route Files
 let clubs = require('./routes/clubs')
 let drivers = require('./routes/drivers')
+let protocols = require('./routes/protocols')
 let users = require('./routes/users')
 app.use('/clubs', clubs)
 app.use('/drivers', drivers)
+app.use('/protocols', protocols)
 app.use('/users', users)
 
 // Start Server

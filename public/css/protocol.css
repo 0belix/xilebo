@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+html, body, div, header, nav, main, article, section, aside, footer, figure, figcaption {margin:0; padding:0;}
+header, nav, main, article, section, aside, footer, figure, figcaption {display:block;} /* För webbläsare utan stöd för HTML5 */
+html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
+
+.containerPorotocol {
+  display: flex;
+  justify-content: center;
+}
+
+.containerPorotocol  .cell_no, .containerPorotocol  .cell_name, .containerPorotocol  .cell {
+  border: 0.01rem #CCC solid;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.containerPorotocol .cell_start, .containerPorotocol .cell_end {
+  flex-basis: 1.25%;
+}
+
+.containerPorotocol .cell_no {
+  background-color: #FFFFCC;
+  flex-basis: 2.5%;
+}
+
+.containerPorotocol .cell_name {
+  background-color: #FFFFCC;
+  flex-basis: 24.7%;
+}
+
+.containerPorotocol .cell {
+  background-color: #ABC;
+  flex-basis: 3.7%;
+}

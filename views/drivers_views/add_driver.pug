@@ -3,35 +3,34 @@ extends ../layout
 block content
   h1 Lägg till förare
   form(method='POST', action='/drivers/add')
-    #form-group
-      br
+    .form-group
       label Förnamn:
       input.form-control(name='firstname', type='text')
-    #form-group
-      br
+    .form-group
       label Efternamn:
       input.form-control(name='lastname', type='text')
-    #form-group
-      br
+    .form-group
       label Klubb:
-      input.form-control(name='driversfor', type='text')
+      select.form-control(name='driversfor')
+        option()
+        option(value='Dackarna') Dackarna
+        option(value='Vetlanda Speedway') Vetlanda Speedway
+        option(value='Indianerna') Indianerna
+        option(value='Masarna') Masarna
     .row
       .col-3
-        #form-group
-          br
+        .form-group
           label Började:
           input.form-control(name='joined', type='date')
     .row
       .col-3
-        #form-group
-          br
+        .form-group
           label Slutade:
           input.form-control(name='vacated', type='date')
     .form-check
-      br
       input.form-check-input(name='teamcaptain', type='checkbox')
       label.form-check-label(for='teamcaptain') Lagkapten
-    #form-group
+    .form-group
       br
       label Övrigt:
       textarea.form-control(name='misc')

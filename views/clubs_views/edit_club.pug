@@ -3,19 +3,19 @@ extends ../layout
 block content
   h1 Redigera klubb
   form(method='POST', action='/clubs/edit/' + club._id)
-    #form-group
+    .form-group
       label Name:
       input.form-control(name='name', type='text', value=club.name)
-    #form-group
+    .form-group
       label Lagledare:
       input.form-control(name='teamleader1', type='text', value=club.teamleader1)
-    #form-group
+    .form-group
       label Lagledare, ställföreträdare:
       input.form-control(name='teamleader2', type='text', value=club.teamleader2)
-    #form-group
+    .form-group
       label Banrekord:
       input.form-control(name='trackrecord', type='number', placeholder='0.0', value=club.trackrecord, step='0.1')
-    #form-group
+    .form-group
       label Misc:
       textarea.form-control(name='misc')= club.misc
     br

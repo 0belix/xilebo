@@ -3,10 +3,10 @@ extends ../layout
 block content
   h1 Logga in
   form(method='POST', action='/users/login')
-    #form-group
+    .form-group
       label Username:
       input.form-control(name='username', type='text')
-    #form-group
+    .form-group
       label Password:
       input.form-control(name='password', type='password')
     br

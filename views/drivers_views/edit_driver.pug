@@ -3,22 +3,18 @@ extends ../layout
 block content
   h1 Redigera förare
   form(method='POST', action='/drivers/edit/' + driver._id)
-    #form-group
-      br
+    .form-group
       label Förnamn:
       input.form-control(name='firstname', type='text', value=driver.firstname)
-    #form-group
-      br
+    .form-group
       label Efternamn:
       input.form-control(name='lastname', type='text', value=driver.lastname)
-    #form-group
-      br
+    .form-group
       label Klubb:
       input.form-control(name='driversfor', type='text', value=driver.driversfor)
     .row
       .col-3
-        #form-group
-          br
+        .form-group
           label Började:
           if driver.joined != null
             -let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -27,8 +23,7 @@ block content
             input.form-control(name='joined', type='date')
     .row
       .col-3
-        #form-group
-          br
+        .form-group
           label Slutade:
           if driver.vacated != null
             -let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -36,13 +31,12 @@ block content
           else
             input.form-control(name='vacated', type='date')
     .form-check
-      br
       if driver.teamcaptain == 'on'
         input.form-check-input(name='teamcaptain', type='checkbox', checked)
       else
         input.form-check-input(name='teamcaptain', type='checkbox')
       label.form-check-label(for='teamcaptain') Lagkapten
-    #form-group
+    .form-group
       br
       label Övrigt:
       textarea.form-control(name='misc')= driver.misc

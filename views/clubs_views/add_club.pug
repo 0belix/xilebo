@@ -3,19 +3,19 @@ extends ../layout
 block content
   h1 Lägg till klubb
   form(method='POST', action='/clubs/add')
-    #form-group
+    .form-group
       label Namn:
       input.form-control(name='name', type='text')
-    #form-group
+    .form-group
       label Lagledare:
       input.form-control(name='teamleader1', type='text')
-    #form-group
+    .form-group
       label Lagledare, ställföreträdare:
       input.form-control(name='teamleader2', type='text')
-    #form-group
+    .form-group
       label Banrekord:
       input.form-control(name='trackrecord', type='number', placeholder='0.0', step='0.1')
-    #form-group
+    .form-group
       label Övrigt:
       textarea.form-control(name='misc')
     br

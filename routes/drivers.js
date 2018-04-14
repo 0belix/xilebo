@@ -37,18 +37,25 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 // Add Submit POST Route
 router.post('/add', (req, res) => {
   req.checkBody('firstname', 'Firstname is required').notEmpty()
-  req.checkBody('lastname', 'Lastame is required').notEmpty()
-  req.checkBody('driversfor', 'Clubb is required').notEmpty()
+  req.checkBody('lastname', 'Lastname is required').notEmpty()
+  req.checkBody('driversfor', 'Club is required').exists()
   req.checkBody('joined', 'Date for joined is required').notEmpty()
 
   // Get Errors
   let errors = req.validationErrors()
 
   if (errors) {
-    res.render('drivers_views/add_driver', {
-      errors: errors
+    Club.find({}, (err, clubs) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.render('drivers_views/add_driver', {
+          errors: errors,
+          clubs: clubs
+        })
+      }
     })
-  } else {
+    } else {
     let driver = new Driver()
     driver.firstname = req.body.firstname
     driver.lastname = req.body.lastname
@@ -58,7 +65,7 @@ router.post('/add', (req, res) => {
     driver.teamcaptain = req.body.teamcaptain
     driver.misc = req.body.misc
     driver.author = req.user._id
-  
+
     driver.save((err) => {
       if (err) {
         console.log(err)

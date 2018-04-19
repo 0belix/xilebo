@@ -4,32 +4,65 @@ html, body, div, header, nav, main, article, section, aside, footer, figure, fig
 header, nav, main, article, section, aside, footer, figure, figcaption {display:block;} /* För webbläsare utan stöd för HTML5 */
 html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
 
-.containerPorotocol {
+.containerProtocol {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  text-align: center;
+  background-color: #C6D9F0;
 }
 
-.containerPorotocol  .cell_no, .containerPorotocol  .cell_name, .containerPorotocol  .cell {
+.containerProtocol  .cell_heat_no,
+.containerProtocol  .cell_driver_no,
+.containerProtocol  .cell_driver_name,
+.containerProtocol  .cell_team_name,
+.containerProtocol  .cell {
+  flex-grow: 1;
   border: 0.01rem #CCC solid;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.containerPorotocol .cell_start, .containerPorotocol .cell_end {
+.containerProtocol .cell_filler_start,
+.containerProtocol .cell_filler_end {
   flex-basis: 1.25%;
 }
 
-.containerPorotocol .cell_no {
-  background-color: #FFFFCC;
+.containerProtocol .cell_heat_no {
+  background-color: #F8F8FF;
+  flex-basis: 3.7%;
+}
+
+.containerProtocol .cell_driver_no {
+  background-color: #FFC;
   flex-basis: 2.5%;
 }
 
-.containerPorotocol .cell_name {
-  background-color: #FFFFCC;
+.containerProtocol .cell_team_name {
+  background-color: #000;
+  flex-basis: 23.5%;
+}
+
+.containerProtocol .cell_driver_name {
+  background-color: #FFC;
   flex-basis: 24.7%;
 }
 
-.containerPorotocol .cell {
-  background-color: #ABC;
+.containerProtocol .cell {
+  background-color: #D8D8D8;
   flex-basis: 3.7%;
 }
+
+.containerProtocol .color_b {
+  background-color: #9CF;
+}
+
+.containerProtocol .color_b::after {
+  content: "B";
+}
+
+.containerProtocol .lane_4::after {
+  content: "4";
+}
+
+/* Red: #F9C, Blue: #9CF, Yellow: #FFFF00, White: #FFF, Orange: #FFC000, Purple: #CCC0D9, Public_Gray: #DDD9C3 */

@@ -4,20 +4,48 @@ html, body, div, header, nav, main, article, section, aside, footer, figure, fig
 header, nav, main, article, section, aside, footer, figure, figcaption {display:block;} /* För webbläsare utan stöd för HTML5 */
 html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
 
+:root {
+/* Red: #F9C, Blue: #9CF, Yellow: #FFFF00, White: #FFF, Orange: #FFC000, Purple: #CCC0D9, Public_Gray: #DDD9C3 */
+  --red: #F9C;
+  --blue: #9CF;
+  --white: #FFF;
+  --yellow: #FFFF00;
+  --light-yellow: #FFC; /* background-color for the driver name and number cells */
+  --white-smoke: #F8F8FF; /* background-color for the score cells */
+  --orange: #FFC000; /* background-color for the score cells */
+  --purple: #CCC0D9; /* background-color for the time cells */
+  --audience-gray: #DDD9C3; /* background-color for the audience cell */
+  --gray: #D8D8D8; /* background-color for the empty cells */
+  --black: #000; /* background-color for the team name cells */
+  --light-blue: #C6D9F0; /* background-color for the rest */
+}
+
 .containerProtocol {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  /* align-items: center; */
+  align-content: center;
   text-align: center;
-  background-color: #C6D9F0;
+  background-color: var(--light-blue);
 }
 
-.containerProtocol  .cell_heat_no,
-.containerProtocol  .cell_driver_no,
-.containerProtocol  .cell_driver_name,
-.containerProtocol  .cell_team_name,
-.containerProtocol  .cell {
+.containerProtocol * {
   flex-grow: 1;
+}
+
+.containerProtocol  .empty_row {
+  padding: 0.7rem;
+}
+
+.containerProtocol .cell_heat_no,
+.containerProtocol .cell_sa,
+.containerProtocol .cell_b,
+.containerProtocol .cell_h,
+.containerProtocol .cell_driver_no,
+.containerProtocol .cell_driver_name,
+.containerProtocol .cell_team_name,
+.containerProtocol .cell {
   border: 0.01rem #CCC solid;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -28,41 +56,91 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   flex-basis: 1.25%;
 }
 
-.containerProtocol .cell_heat_no {
-  background-color: #F8F8FF;
+.containerProtocol .cell_heat_no,
+.containerProtocol .cell_sa,
+.containerProtocol .cell_b,
+.containerProtocol .cell_h {
+  background-color: var(--white-smoke);
   flex-basis: 3.7%;
 }
 
 .containerProtocol .cell_driver_no {
-  background-color: #FFC;
+  background-color: var(--light-yellow);
   flex-basis: 2.5%;
 }
 
 .containerProtocol .cell_team_name {
-  background-color: #000;
+  background-color: var(--black);
   flex-basis: 23.5%;
 }
 
 .containerProtocol .cell_driver_name {
-  background-color: #FFC;
+  background-color: var(--light-yellow);
   flex-basis: 24.7%;
 }
 
 .containerProtocol .cell {
-  background-color: #D8D8D8;
+  position: relative;
+  background-color: var(--gray);
   flex-basis: 3.7%;
 }
 
-.containerProtocol .color_b {
-  background-color: #9CF;
+.containerProtocol .color_r {
+  background-color: var(--red);
 }
 
-.containerProtocol .color_b::after {
+.containerProtocol .color_b {
+  background-color: var(--blue);
+}
+
+.containerProtocol .color_y {
+  background-color: var(--yellow);
+}
+
+.containerProtocol .color_w {
+  background-color: var(--white);
+}
+
+.containerProtocol div[class*='color_']::before {
+  position: absolute;
+  bottom: 3%;
+  right: 6%;
+}
+
+.containerProtocol div[class*='lane_']::after {
+  position: absolute;
+  top: 3%;
+  right: 6%;
+}
+
+.containerProtocol .color_r::before {
+  content: "R";
+}
+
+.containerProtocol .color_b::before {
   content: "B";
+}
+
+.containerProtocol .color_y::before {
+  content: "G";
+}
+
+.containerProtocol .color_w::before {
+  content: "V";
+}
+
+.containerProtocol .lane_1::after {
+  content: "1";
+}
+
+.containerProtocol .lane_2::after {
+  content: "2";
+}
+
+.containerProtocol .lane_3::after {
+  content: "3";
 }
 
 .containerProtocol .lane_4::after {
   content: "4";
 }
-
-/* Red: #F9C, Blue: #9CF, Yellow: #FFFF00, White: #FFF, Orange: #FFC000, Purple: #CCC0D9, Public_Gray: #DDD9C3 */

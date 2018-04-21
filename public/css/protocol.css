@@ -5,7 +5,6 @@ header, nav, main, article, section, aside, footer, figure, figcaption {display:
 html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
 
 :root {
-/* Red: #F9C, Blue: #9CF, Yellow: #FFFF00, White: #FFF, Orange: #FFC000, Purple: #CCC0D9, Public_Gray: #DDD9C3 */
   --red: #F9C;
   --blue: #9CF;
   --white: #FFF;
@@ -14,28 +13,74 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   --white-smoke: #F8F8FF; /* background-color for the score cells */
   --orange: #FFC000; /* background-color for the score cells */
   --purple: #CCC0D9; /* background-color for the time cells */
-  --audience-gray: #DDD9C3; /* background-color for the audience cell */
+  --spectator-gray: #DDD9C3; /* background-color for the spectator cell */
   --gray: #D8D8D8; /* background-color for the empty cells */
   --black: #000; /* background-color for the team name cells */
   --light-blue: #C6D9F0; /* background-color for the rest */
 }
 
+.containerFlex {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.containerFlex * {
+  position: relative;
+  flex-grow: 1;
+}
+
 .containerProtocol {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  /* align-items: center; */
-  align-content: center;
   text-align: center;
   background-color: var(--light-blue);
 }
 
-.containerProtocol * {
-  flex-grow: 1;
+.containerProtocol  .empty_row_13 {
+  padding: 0.5rem;
 }
 
-.containerProtocol  .empty_row {
-  padding: 0.7rem;
+.containerProtocol:last-of-type .empty_row_13:last-of-type {
+  background-color: var(--white-smoke);
+  padding: 0;
+}
+
+.containerProtocol  .empty_row_23 {
+  padding: 1rem;
+}
+
+.containerProtocol .empty_cell_13 {
+  flex-basis: 1.25%;
+}
+
+.containerProtocol .empty_cell_23 {
+  flex-basis: 2.5%;
+  transform: rotate(-90deg);
+}
+
+.containerProtocol .empty_cell {
+  flex-basis: 3.7%;
+}
+
+.containerProtocol .empty_cell_2_23 {
+  flex-basis: 9.9%;
+}
+
+.containerProtocol .empty_cell_3,
+.containerProtocol .cell_spectator {
+  flex-basis: 11.1%;
+}
+
+.containerProtocol .cell_spectator {
+  background-color: var(--spectator-gray);
+}
+
+.containerProtocol .cell_spectator::before {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  content: "Publik:";
 }
 
 .containerProtocol .cell_heat_no,
@@ -44,16 +89,12 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerProtocol .cell_h,
 .containerProtocol .cell_driver_no,
 .containerProtocol .cell_driver_name,
+.containerProtocol div[class*='cell_teamleader'],
 .containerProtocol .cell_team_name,
 .containerProtocol .cell {
-  border: 0.01rem #CCC solid;
+  border: 0.001rem #CCC solid;
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-
-.containerProtocol .cell_filler_start,
-.containerProtocol .cell_filler_end {
-  flex-basis: 1.25%;
 }
 
 .containerProtocol .cell_heat_no,
@@ -72,15 +113,35 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerProtocol .cell_team_name {
   background-color: var(--black);
   flex-basis: 23.5%;
+  text-align: left;
+  padding-left: 1rem;
 }
 
-.containerProtocol .cell_driver_name {
+.containerProtocol .cell_driver_name,
+.containerProtocol div[class*='cell_teamleader'] {
   background-color: var(--light-yellow);
   flex-basis: 24.7%;
+  text-align: left;
+  padding-left: 1rem;
 }
 
+/*
+.containerProtocol div[class*='cell_teamleader']::before {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+}
+
+.containerProtocol .cell_teamleader::before {
+  content: "Lagl: ";
+}
+
+.containerProtocol .cell_teamleader_assistant::before {
+  content: "Assl: ";
+}
+*/
+
 .containerProtocol .cell {
-  position: relative;
   background-color: var(--gray);
   flex-basis: 3.7%;
 }
@@ -99,6 +160,14 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 
 .containerProtocol .color_w {
   background-color: var(--white);
+}
+
+.containerProtocol .color_o {
+  background-color: var(--orange);
+}
+
+.containerProtocol .color_p {
+  background-color: var(--purple);
 }
 
 .containerProtocol div[class*='color_']::before {

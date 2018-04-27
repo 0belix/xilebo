@@ -39,10 +39,6 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   background-color: var(--light-blue);
 }
 
-/*.containerProtocol:last-of-type .row_height_1:last-of-type {
-  background-color: var(--white-smoke);
-}*/
-
 .containerProtocol  .row_height_1 {
   height: var(--row-height);
 }
@@ -107,43 +103,17 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   content: "Publik:";
 }
 
-.containerProtocol .cell_heat_no,
-.containerProtocol .cell_sa,
-.containerProtocol .cell_b,
-.containerProtocol .cell_h,
-.containerProtocol .cell_driver_no,
-.containerProtocol .cell_driver_name,
-.containerProtocol div[class*='cell_teamleader'],
-.containerProtocol .cell_team_name,
 .containerProtocol .cell {
   /*border: 0.001rem #CCC solid;*/
-  height: calc(var(--row-height) * 3);
-}
-
-.containerProtocol .cell_heat_no,
-.containerProtocol .cell_sa,
-.containerProtocol .cell_b,
-.containerProtocol .cell_h {
-  background-color: var(--white-smoke);
-  flex-basis: calc(var(--cell-width) * 3);
-}
-
-.containerProtocol .cell_driver_no {
-  background-color: var(--light-yellow);
-  flex-basis: calc(var(--cell-width) * 2);
 }
 
 .containerProtocol .cell_team_name {
-  background-color: var(--black);
-  flex-basis: calc(var(--cell-width) * 19);
   text-align: left;
   padding-left: 1rem;
 }
 
 .containerProtocol .cell_driver_name,
 .containerProtocol div[class*='cell_teamleader'] {
-  background-color: var(--light-yellow);
-  flex-basis: calc(var(--cell-width) * 20);
   text-align: left;
   padding-left: 1rem;
 }
@@ -163,11 +133,6 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   content: "Assl: ";
 }
 */
-
-.containerProtocol .cell {
-  background-color: var(--gray);
-  flex-basis: calc(var(--cell-width) * 3);
-}
 
 .containerProtocol .color_r {
   background-color: var(--red);
@@ -209,7 +174,10 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   background-color: var(--black);
 }
 
-.containerProtocol div[class*='color_']::before {
+.containerProtocol .color_r::before,
+.containerProtocol .color_b::before,
+.containerProtocol .color_y::before,
+.containerProtocol .color_w::before {
   position: absolute;
   bottom: 3%;
   right: 6%;

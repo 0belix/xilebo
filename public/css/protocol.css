@@ -5,10 +5,12 @@ header, nav, main, article, section, aside, footer, figure, figcaption {display:
 html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
 
 :root {
+  --row-height: 1.2922077922077922077922077922078vh;
+  --cell-width: 1.2333333333333333333333333333333%;
   --red: #F9C;
   --blue: #9CF;
   --white: #FFF;
-  --yellow: #FFFF00;
+  --yellow: #FF0;
   --light-yellow: #FFC; /* background-color for the driver name and number cells */
   --white-smoke: #F8F8FF; /* background-color for the score cells */
   --orange: #FFC000; /* background-color for the score cells */
@@ -22,7 +24,7 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerFlex {
   display: flex;
   flex-direction: column;
-  height: 99vh;
+  height: 99.5vh;
 }
 
 .containerFlex * {
@@ -37,46 +39,68 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   background-color: var(--light-blue);
 }
 
-.containerProtocol  .empty_row_13 {
-  padding: 0.5rem;
-}
-
-.containerProtocol:last-of-type .empty_row_13:last-of-type {
+/*.containerProtocol:last-of-type .row_height_1:last-of-type {
   background-color: var(--white-smoke);
-  padding: 0;
+}*/
+
+.containerProtocol  .row_height_1 {
+  height: var(--row-height);
 }
 
-.containerProtocol  .empty_row_23 {
-  padding: 1rem;
+.containerProtocol  .row_height_2 {
+  height: calc(var(--row-height) * 2);
 }
 
-.containerProtocol .empty_cell_13 {
-  flex-basis: 1.25%;
+.containerProtocol div[class*='cell_'] {
+  height: calc(var(--row-height) * 3);
 }
 
-.containerProtocol .empty_cell_23 {
-  flex-basis: 2.5%;
+.containerProtocol  .cell_height_4 {
+  height: calc(var(--row-height) * 4) !important;
+}
+
+.containerProtocol .cell_width_1 {
+  flex-basis: var(--cell-width);
+}
+
+.containerProtocol .cell_width_2 {
+  flex-basis: calc(var(--cell-width) * 2);
+}
+
+.containerProtocol .cell_width_3 {
+  flex-basis: calc(var(--cell-width) * 3);
+  background-color: var(--gray); /* This line here to keep it a little DRY */
+}
+
+.containerProtocol .cell_width_8 {
+  flex-basis: calc(var(--cell-width) * 8);
+}
+
+.containerProtocol .cell_width_9 {
+  flex-basis: calc(var(--cell-width) * 9);
+}
+
+.containerProtocol .cell_width_10 {
+  flex-basis: calc(var(--cell-width) * 10);
+}
+
+.containerProtocol .cell_width_19 {
+  flex-basis: calc(var(--cell-width) * 19);
+}
+
+.containerProtocol .cell_width_20 {
+  flex-basis: calc(var(--cell-width) * 20);
+}
+
+.containerProtocol .rotate {
   transform: rotate(-90deg);
 }
 
-.containerProtocol .empty_cell {
-  flex-basis: 3.7%;
-}
-
-.containerProtocol .empty_cell_2_23 {
-  flex-basis: 9.9%;
-}
-
-.containerProtocol .empty_cell_3,
-.containerProtocol .cell_spectator {
-  flex-basis: 11.1%;
-}
-
-.containerProtocol .cell_spectator {
+.containerProtocol .spectator {
   background-color: var(--spectator-gray);
 }
 
-.containerProtocol .cell_spectator::before {
+.containerProtocol .spectator::before {
   position: absolute;
   top: 3%;
   left: 3%;
@@ -92,9 +116,8 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerProtocol div[class*='cell_teamleader'],
 .containerProtocol .cell_team_name,
 .containerProtocol .cell {
-  border: 0.001rem #CCC solid;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  /*border: 0.001rem #CCC solid;*/
+  height: calc(var(--row-height) * 3);
 }
 
 .containerProtocol .cell_heat_no,
@@ -102,17 +125,17 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerProtocol .cell_b,
 .containerProtocol .cell_h {
   background-color: var(--white-smoke);
-  flex-basis: 3.7%;
+  flex-basis: calc(var(--cell-width) * 3);
 }
 
 .containerProtocol .cell_driver_no {
   background-color: var(--light-yellow);
-  flex-basis: 2.5%;
+  flex-basis: calc(var(--cell-width) * 2);
 }
 
 .containerProtocol .cell_team_name {
   background-color: var(--black);
-  flex-basis: 23.5%;
+  flex-basis: calc(var(--cell-width) * 19);
   text-align: left;
   padding-left: 1rem;
 }
@@ -120,7 +143,7 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerProtocol .cell_driver_name,
 .containerProtocol div[class*='cell_teamleader'] {
   background-color: var(--light-yellow);
-  flex-basis: 24.7%;
+  flex-basis: calc(var(--cell-width) * 20);
   text-align: left;
   padding-left: 1rem;
 }
@@ -143,7 +166,7 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 
 .containerProtocol .cell {
   background-color: var(--gray);
-  flex-basis: 3.7%;
+  flex-basis: calc(var(--cell-width) * 3);
 }
 
 .containerProtocol .color_r {
@@ -154,12 +177,24 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   background-color: var(--blue);
 }
 
+.containerProtocol .color_lb {
+  background-color: var(--light-blue);
+}
+
 .containerProtocol .color_y {
   background-color: var(--yellow);
 }
 
+.containerProtocol .color_ly {
+  background-color: var(--light-yellow);
+}
+
 .containerProtocol .color_w {
   background-color: var(--white);
+}
+
+.containerProtocol .color_ws {
+  background-color: var(--white-smoke);
 }
 
 .containerProtocol .color_o {
@@ -168,6 +203,10 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 
 .containerProtocol .color_p {
   background-color: var(--purple);
+}
+
+.containerProtocol .color_0 {
+  background-color: var(--black);
 }
 
 .containerProtocol div[class*='color_']::before {

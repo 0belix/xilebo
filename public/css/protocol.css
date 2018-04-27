@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-html, body, div, header, nav, main, article, section, aside, footer, figure, figcaption {margin:0; padding:0;}
-header, nav, main, article, section, aside, footer, figure, figcaption {display:block;} /* För webbläsare utan stöd för HTML5 */
-html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om texten */
-
 :root {
   --row-height: 1.2922077922077922077922077922078vh;
   --cell-width: 1.2333333333333333333333333333333%;
@@ -30,6 +26,8 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
 .containerFlex * {
   position: relative;
   flex-grow: 1;
+  /*font-size: 1rem;*/
+  /*text-size-adjust: auto;*/
 }
 
 .containerProtocol {
@@ -103,8 +101,10 @@ html {-webkit-text-size-adjust:100%;} /* Så att Safari i iPhone inte skalar om 
   content: "Publik:";
 }
 
-.containerProtocol .cell {
+/*.containerProtocol div[class*='cell_'],*/
+.containerProtocol .cell_width_3 {
   /*border: 0.001rem #CCC solid;*/
+  outline: 1px solid black;
 }
 
 .containerProtocol .cell_team_name {

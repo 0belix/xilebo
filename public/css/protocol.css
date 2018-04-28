@@ -26,14 +26,15 @@
 .containerFlex * {
   position: relative;
   flex-grow: 1;
-  /*font-size: 1rem;*/
-  /*text-size-adjust: auto;*/
+  z-index: 1;
 }
 
 .containerProtocol {
   display: flex;
   flex-direction: row;
   text-align: center;
+  /* font-size: calc(1vw + 1vh + 1vmin); */
+  font-size: 1.5vw;
   background-color: var(--light-blue);
 }
 
@@ -90,6 +91,11 @@
   transform: rotate(-90deg);
 }
 
+.fs1 {
+  /* font-size: calc(1vw + 1vh + 1vmin); */
+  font-size: 0.88vw;
+}
+
 .containerProtocol .spectator {
   background-color: var(--spectator-gray);
 }
@@ -101,11 +107,76 @@
   content: "Publik:";
 }
 
-/*.containerProtocol div[class*='cell_'],*/
-.containerProtocol .cell_width_3 {
-  /*border: 0.001rem #CCC solid;*/
-  outline: 1px solid black;
+.z-1 {
+  z-index: -1;
 }
+
+.z1 {
+  z-index: 1;
+}
+
+/*.containerProtocol * {
+  outline: solid 1px black;
+}*/
+
+.outline_none {
+  outline: none;
+}
+
+.z_outline {
+  z-index: -1;
+  outline: none;
+}
+
+/*.containerProtocol * {
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: black;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: black;
+}
+
+.border_left {
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: black;
+  border-top-style: hidden;
+}
+
+.border_top {
+  border-left-style: hidden;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: black;
+}
+
+.border_right {
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: black;
+}
+
+.border_bottom {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+}
+
+.border_transparent {
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+
+.border_hidden {
+  border-left-style: hidden;
+  border-top-style: hidden;
+}
+
+.border_none {
+  border-left-style: none;
+  border-top-style: none;
+}*/
 
 .containerProtocol .cell_team_name {
   text-align: left;
@@ -172,6 +243,7 @@
 
 .containerProtocol .color_0 {
   background-color: var(--black);
+  color: white;
 }
 
 .containerProtocol .color_r::before,
@@ -181,12 +253,14 @@
   position: absolute;
   bottom: 3%;
   right: 6%;
+  font-size: 0.9vw;
 }
 
 .containerProtocol div[class*='lane_']::after {
   position: absolute;
   top: 3%;
-  right: 6%;
+  right: 7%;
+  font-size: 0.9vw;
 }
 
 .containerProtocol .color_r::before {

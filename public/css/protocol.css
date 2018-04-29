@@ -15,43 +15,59 @@
   --gray: #D8D8D8; /* background-color for the empty cells */
   --black: #000; /* background-color for the team name cells */
   --light-blue: #C6D9F0; /* background-color for the rest */
+  background-color: var(--light-blue);
 }
 
 .containerFlex {
   display: flex;
   flex-direction: column;
-  height: 99.5vh;
+  height: 100vh;
 }
 
 .containerFlex * {
   position: relative;
   flex-grow: 1;
-  z-index: 1;
+  text-align: center;
+  font-size: 1.5vw;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .containerProtocol {
   display: flex;
   flex-direction: row;
-  text-align: center;
-  /* font-size: calc(1vw + 1vh + 1vmin); */
-  font-size: 1.5vw;
-  background-color: var(--light-blue);
+}
+
+.containerProtocol:last-of-type {
+  font-size: 0.88vw;
+  line-height: 0.88vw;
+  height: calc(var(--row-height) * 1.5);
+  background-color: var(--white-smoke);
+  justify-content: center;
 }
 
 .containerProtocol  .row_height_1 {
   height: var(--row-height);
 }
 
-.containerProtocol  .row_height_2 {
-  height: calc(var(--row-height) * 2);
+.containerProtocol  .cell_height_1 {
+  height: calc(var(--row-height) * 1) !important;
+  line-height: calc(var(--row-height) * 1) !important;
+}
+
+.containerProtocol  .cell_height_2 {
+  height: calc(var(--row-height) * 2) !important;
+  line-height: calc(var(--row-height) * 2) !important;
 }
 
 .containerProtocol div[class*='cell_'] {
   height: calc(var(--row-height) * 3);
+  line-height: calc(var(--row-height) * 3);
 }
 
 .containerProtocol  .cell_height_4 {
   height: calc(var(--row-height) * 4) !important;
+  line-height: calc(var(--row-height) * 4) !important;
 }
 
 .containerProtocol .cell_width_1 {
@@ -64,7 +80,11 @@
 
 .containerProtocol .cell_width_3 {
   flex-basis: calc(var(--cell-width) * 3);
-  background-color: var(--gray); /* This line here to keep it a little DRY */
+  background-color: var(--gray);
+}
+
+.containerProtocol .cell_width_4 {
+  flex-basis: calc(var(--cell-width) * 4);
 }
 
 .containerProtocol .cell_width_8 {
@@ -72,11 +92,11 @@
 }
 
 .containerProtocol .cell_width_9 {
-  flex-basis: calc(var(--cell-width) * 9);
+  flex-basis: calc(var(--cell-width) * 9 + 0.15vw);
 }
 
 .containerProtocol .cell_width_10 {
-  flex-basis: calc(var(--cell-width) * 10);
+  flex-basis: calc(var(--cell-width) * 10 + 0.15vw);
 }
 
 .containerProtocol .cell_width_19 {
@@ -85,125 +105,99 @@
 
 .containerProtocol .cell_width_20 {
   flex-basis: calc(var(--cell-width) * 20);
+  text-align: left;
+  text-indent: 0.5vw;
 }
 
-.containerProtocol .rotate {
+.containerProtocol .cell_width_48 {
+  flex-basis: calc(var(--cell-width) * 48 + 15px);
+}
+
+.containerProtocol .cell_width_50 {
+  flex-basis: calc(var(--cell-width) * 50 + 16px);
+}
+
+.containerFlex :nth-child(11) .cell_width_20::before,
+.containerFlex :nth-child(23) .cell_width_20::before {
+  content: "Lagl:\A0";
+}
+
+.containerFlex :nth-child(12) .cell_width_20::before,
+.containerFlex :nth-child(24) .cell_width_20::before {
+  content: "Assl:\A0";
+}
+
+.containerProtocol .rotate div {
+  font-size: 0.9vw;
+  transform: rotate(-90deg) translate(0, 0.8vw);
+}
+
+.containerFlex :nth-last-child(3) .rotate div {
+  font-size: 1.3vw;
   transform: rotate(-90deg);
 }
 
-.fs1 {
-  /* font-size: calc(1vw + 1vh + 1vmin); */
-  font-size: 0.88vw;
-}
-
-.containerProtocol .spectator {
+#spectator {
   background-color: var(--spectator-gray);
+  border-left: solid 1px black;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  font-size: 2vw;
+  line-height: 2vw;
+  text-indent: 2vw;
+  letter-spacing: 6px;
 }
 
-.containerProtocol .spectator::before {
+#spectator::before {
   position: absolute;
   top: 3%;
   left: 3%;
   content: "Publik:";
+  font-size: 0.9vw;
+  line-height: 0.9vw;
+  text-indent: 0;
+  letter-spacing: normal;
 }
 
-.z-1 {
-  z-index: -1;
+#track_record {
+  text-align: right;
+  font-size: 1vw;
+  transform: translate(-2%, 20%);
 }
 
-.z1 {
-  z-index: 1;
+#track_record::before {
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  font-size: 0.9vw;
+  line-height: 0.5vw;
+  content: "BR";
 }
 
-/*.containerProtocol * {
-  outline: solid 1px black;
-}*/
-
-.outline_none {
-  outline: none;
-}
-
-.z_outline {
-  z-index: -1;
-  outline: none;
-}
-
-/*.containerProtocol * {
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: black;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: black;
+.containerProtocol div[class*='cell_'] {
+  border-left: solid 1px black;
+  border-top: solid 1px black;
 }
 
 .border_left {
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: black;
-  border-top-style: hidden;
+  border-left: solid 1px black;
+  border-top-style: none !important;
 }
 
 .border_top {
-  border-left-style: hidden;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: black;
-}
-
-.border_right {
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-right-color: black;
-}
-
-.border_bottom {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: black;
+  border-left-color: transparent !important;
+  border-top: solid 1px black;
 }
 
 .border_transparent {
-  border-left-color: transparent;
-  border-top-color: transparent;
-}
-
-.border_hidden {
-  border-left-style: hidden;
-  border-top-style: hidden;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
 }
 
 .border_none {
-  border-left-style: none;
-  border-top-style: none;
-}*/
-
-.containerProtocol .cell_team_name {
-  text-align: left;
-  padding-left: 1rem;
+  border-left-style: none !important;
+  border-top-style: none !important;
 }
-
-.containerProtocol .cell_driver_name,
-.containerProtocol div[class*='cell_teamleader'] {
-  text-align: left;
-  padding-left: 1rem;
-}
-
-/*
-.containerProtocol div[class*='cell_teamleader']::before {
-  position: absolute;
-  top: 50%;
-  left: 2%;
-}
-
-.containerProtocol .cell_teamleader::before {
-  content: "Lagl: ";
-}
-
-.containerProtocol .cell_teamleader_assistant::before {
-  content: "Assl: ";
-}
-*/
 
 .containerProtocol .color_r {
   background-color: var(--red);
@@ -246,6 +240,10 @@
   color: white;
 }
 
+.containerProtocol .color_transparent {
+  background-color: transparent;
+}
+
 .containerProtocol .color_r::before,
 .containerProtocol .color_b::before,
 .containerProtocol .color_y::before,
@@ -254,6 +252,7 @@
   bottom: 3%;
   right: 6%;
   font-size: 0.9vw;
+  line-height: 0.9vw;
 }
 
 .containerProtocol div[class*='lane_']::after {
@@ -261,6 +260,7 @@
   top: 3%;
   right: 7%;
   font-size: 0.9vw;
+  line-height: 0.9vw;
 }
 
 .containerProtocol .color_r::before {

@@ -92,11 +92,11 @@
 }
 
 .containerProtocol .cell_width_9 {
-  flex-basis: calc(var(--cell-width) * 9 + 0.15vw);
+  flex-basis: calc(var(--cell-width) * 9 + 0.02vw);
 }
 
 .containerProtocol .cell_width_10 {
-  flex-basis: calc(var(--cell-width) * 10 + 0.15vw);
+  flex-basis: calc(var(--cell-width) * 10 + 0.02vw);
 }
 
 .containerProtocol .cell_width_19 {
@@ -110,11 +110,18 @@
 }
 
 .containerProtocol .cell_width_48 {
-  flex-basis: calc(var(--cell-width) * 48 + 15px);
+  flex-basis: calc(var(--cell-width) * 48 + 15 * 0.01vw);
 }
 
 .containerProtocol .cell_width_50 {
-  flex-basis: calc(var(--cell-width) * 50 + 16px);
+  flex-basis: calc(var(--cell-width) * 50 + 17 * 0.01vw);
+}
+
+.containerFlex :nth-child(11) .cell_width_20,
+.containerFlex :nth-child(12) .cell_width_20,
+.containerFlex :nth-child(23) .cell_width_20,
+.containerFlex :nth-child(24) .cell_width_20 {
+  flex-basis: calc(var(--cell-width) * 20 - 0.01vw);
 }
 
 .containerFlex :nth-child(11) .cell_width_20::before,
@@ -145,7 +152,7 @@
   font-size: 2vw;
   line-height: 2vw;
   text-indent: 2vw;
-  letter-spacing: 6px;
+  letter-spacing: 0.5vw;
 }
 
 #spectator::before {

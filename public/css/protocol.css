@@ -139,9 +139,9 @@
 
 #spectator {
   background-color: var(--spectator-gray);
-  border-left: solid 1px black;
-  border-top: solid 1px black;
-  border-right: solid 1px black;
+  border-left: solid 0.01vw black;
+  border-top: solid 0.01vw black;
+  border-right: solid 0.01vw black;
   font-size: 2vw;
   line-height: 2vw;
   text-indent: 2vw;
@@ -175,18 +175,18 @@
 }
 
 .containerProtocol div[class*='cell_'] {
-  border-left: solid 1px black;
-  border-top: solid 1px black;
+  border-left: solid 0.01vw black;
+  border-top: solid 0.01vw black;
 }
 
 .border_left {
-  border-left: solid 1px black;
+  border-left: solid 0.01vw black;
   border-top-style: none !important;
 }
 
 .border_top {
   border-left-color: transparent !important;
-  border-top: solid 1px black;
+  border-top: solid 0.01vw black;
 }
 
 .border_transparent {

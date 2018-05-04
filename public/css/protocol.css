@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 :root {
-  --row-height: 1.2922077922077922077922077922078vh;
-  --cell-width: 1.2333333333333333333333333333333%;
+  --row-height: calc(99.5vh / 77);
+  --cell-width: calc(99.9% / 81);
   --red: #F9C;
   --blue: #9CF;
   --white: #FFF;
@@ -16,6 +16,10 @@
   --black: #000; /* background-color for the team name cells */
   --light-blue: #C6D9F0; /* background-color for the rest */
   background-color: var(--light-blue);
+}
+
+.hide {
+  display: none !important;
 }
 
 .containerFlex {

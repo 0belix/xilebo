@@ -153,9 +153,10 @@
   border-left: solid 0.01vw black;
   border-top: solid 0.01vw black;
   border-right: solid 0.01vw black;
+  font-weight: bold;
   font-size: 2vw;
   line-height: 2vw;
-  text-indent: 2vw;
+  text-indent: 3vw;
   letter-spacing: 0.5vw;
 }
 
@@ -164,6 +165,7 @@
   top: 3%;
   left: 3%;
   content: "Publik:";
+  font-weight: normal;
   font-size: 0.9vw;
   line-height: 0.9vw;
   text-indent: 0;
@@ -253,6 +255,7 @@
 .containerProtocol .color_0 {
   background-color: var(--black);
   color: white;
+  font-variant: small-caps;
 }
 
 .containerProtocol .color_transparent {

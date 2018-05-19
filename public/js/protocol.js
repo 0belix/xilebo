@@ -53,20 +53,22 @@ function hider(e) {
     if (theID.match(theRE)) {
       for (let x = 0; x < 2; x++) {
         let where = x === 0 ? '_home' : '_away'
+        let sbh = true
         for (let j = 1; j <= 15; j++) {
           if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
           document.querySelector('#h' + j + '' + where).classList.toggle('hide')
           for (let i = 1; i <= 8; i++) {
             document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
-            if (j === 1) {
+            if (sbh) {
               document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
               document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
               document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
             }
           }
-        document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
+          document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
           document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
           if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
+          sbh = false
         }
         document.querySelector('#sum' + where).classList.toggle('hide')
         document.querySelector('#bonus' + where).classList.toggle('hide')
@@ -78,6 +80,9 @@ function hider(e) {
         document.querySelector('#tot_bonus' + where).classList.toggle('hide')
         document.querySelector('#tot_heats' + where).classList.toggle('hide')
       }
+      document.querySelectorAll('.cell_width_51').forEach((e) => {
+        e.classList.toggle('hide')
+      })
     }
   }
 }

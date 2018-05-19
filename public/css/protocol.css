@@ -112,10 +112,6 @@
   flex-basis: calc(var(--cell-width) * 9 + 0.02vw);
 }
 
-.containerProtocol .cell_width_10 {
-  flex-basis: calc(var(--cell-width) * 10 + 0.02vw);
-}
-
 .containerProtocol .cell_width_19 {
   flex-basis: calc(var(--cell-width) * 19 + 0.02vw);
 }
@@ -126,12 +122,8 @@
   text-indent: 0.5vw;
 }
 
-.containerProtocol .cell_width_48 {
-  flex-basis: calc(var(--cell-width) * 48 + 0.6vw);
-}
-
-.containerProtocol .cell_width_50 {
-  flex-basis: calc(var(--cell-width) * 50 + 0.7vw);
+.containerProtocol .cell_width_51 {
+  flex-basis: calc(var(--cell-width) * 51);
 }
 
 /*.containerFlex :nth-child(11) .cell_width_20,

@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 :root {
-  --row-height: calc(99.5vh / 77);
-  --cell-width: calc(99.9% / 81);
+  --row-height: calc(99.5vh / 71); /* + 6 hidden rows, ?_home and ?_away */
+  --cell-width: calc(99.9% / 78); /* + 3 hidden columns, BH */
   --red: #F9C;
   --blue: #9CF;
   --white: #FFF;
@@ -64,7 +64,11 @@
 }
 
 .containerProtocol  .row_height_2 {
-  height: calc(var(--row-height) * 2);
+  height: calc(var(--row-height) * 2 - 0.03vh);
+}
+
+.containerProtocol  .row_height_30 {
+  height: calc(var(--row-height) * 30);
 }
 
 .containerProtocol  .cell_height_1 {
@@ -113,7 +117,7 @@
 }
 
 .containerProtocol .cell_width_19 {
-  flex-basis: calc(var(--cell-width) * 19 + 0.02vw);
+  flex-basis: calc(var(--cell-width) * 19);
 }
 
 .containerProtocol .cell_width_20 {
@@ -155,7 +159,7 @@
 
 #spectator {
   background-color: var(--spectator-gray);
-  border: solid 0.04vw black;
+  border: solid 0.01vw black;
   font-weight: bold;
   font-size: 2vw;
   line-height: 2vw;
@@ -206,7 +210,7 @@
 }
 
 .border_bottom {
-  border-bottom: solid 0.04vw black;
+  border-bottom: solid 0.01vw black;
 }
 
 .border_transparent {

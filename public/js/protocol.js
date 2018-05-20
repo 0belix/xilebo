@@ -7,10 +7,12 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_driver('_away') })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_home') })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_away') })
-  $('.containerFlex').on('click', (e) => { hider(e) })
   $('.containerFlex').on('click', (e) => { lane_changer(e) })
+  $('.containerFlex').on('click', (e) => { drivers_hider(e) })
   // $('.containerFlex').on('click', calc)
 })
+
+let filtered_heat = ''
 
 function lane_changer(e) {
   let one = document.querySelectorAll('.lane_1')
@@ -18,26 +20,21 @@ function lane_changer(e) {
   let three = document.querySelectorAll('.lane_3')
   let four = document.querySelectorAll('.lane_4')
   one.forEach((e) => {
-    e.classList.remove('lane_1')
-    e.classList.add('lane_2')
+    e.classList.replace('lane_1', 'lane_2')
   })
   two.forEach((e) => {
-    e.classList.remove('lane_2')
-    e.classList.add('lane_1')
+    e.classList.replace('lane_2', 'lane_1')
   })
   three.forEach((e) => {
-    e.classList.remove('lane_3')
-    e.classList.add('lane_4')
+    e.classList.replace('lane_3', 'lane_4')
   })
   four.forEach((e) => {
-    e.classList.remove('lane_4')
-    e.classList.add('lane_3')
+    e.classList.replace('lane_4', 'lane_3')
   })
 }
 
-function hider(e) {
+function h16_hider(e) {
   let theID = e.target.id
-  let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/
   if (theID === 'h16_home' || theID === 'h16_away') {
     for (let x = 0; x < 2; x++) {
       let where = x === 0 ? '_home' : '_away'
@@ -49,40 +46,68 @@ function hider(e) {
       document.querySelector('#h16_tot' + where).classList.toggle('hide')
     }
     document.querySelector('#h16_time').classList.toggle('hide')
-  } else {
-    if (theID.match(theRE)) {
-      for (let x = 0; x < 2; x++) {
-        let where = x === 0 ? '_home' : '_away'
-        let sbh = true
-        for (let j = 1; j <= 15; j++) {
-          if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
-          document.querySelector('#h' + j + '' + where).classList.toggle('hide')
-          for (let i = 1; i <= 8; i++) {
-            document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
-            if (sbh) {
-              document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
-              document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
-              document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
-            }
+  }
+}
+
+function heats_hider(e) {
+  let theID = e.target.id
+  let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
+  if (theID.match(theRE)) {
+    for (let x = 0; x < 2; x++) {
+      let where = x === 0 ? '_home' : '_away'
+      let sbh = true
+      for (let j = 1; j <= 15; j++) {
+        if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
+        document.querySelector('#h' + j + '' + where).classList.toggle('hide')
+        for (let i = 1; i <= 8; i++) {
+          document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
+          if (sbh) {
+            document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
+            document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
+            document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
           }
-          document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
-          document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
-          if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
-          sbh = false
         }
-        document.querySelector('#sum' + where).classList.toggle('hide')
-        document.querySelector('#bonus' + where).classList.toggle('hide')
-        document.querySelector('#heats' + where).classList.toggle('hide')
-        document.querySelector('#sum_sum' + where).classList.toggle('hide')
-        document.querySelector('#sum_bonus' + where).classList.toggle('hide')
-        document.querySelector('#sum_heats' + where).classList.toggle('hide')
-        document.querySelector('#tot_sum' + where).classList.toggle('hide')
-        document.querySelector('#tot_bonus' + where).classList.toggle('hide')
-        document.querySelector('#tot_heats' + where).classList.toggle('hide')
+        document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
+        document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
+        if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
+        sbh = false
       }
-      document.querySelectorAll('.cell_width_51').forEach((e) => {
-        e.classList.toggle('hide')
-      })
+      document.querySelector('#sum' + where).classList.toggle('hide')
+      document.querySelector('#bonus' + where).classList.toggle('hide')
+      document.querySelector('#heats' + where).classList.toggle('hide')
+      document.querySelector('#sum_sum' + where).classList.toggle('hide')
+      document.querySelector('#sum_bonus' + where).classList.toggle('hide')
+      document.querySelector('#sum_heats' + where).classList.toggle('hide')
+      document.querySelector('#tot_sum' + where).classList.toggle('hide')
+      document.querySelector('#tot_bonus' + where).classList.toggle('hide')
+      document.querySelector('#tot_heats' + where).classList.toggle('hide')
+    }
+    document.querySelectorAll('.cell_width_51').forEach((e) => {
+      e.classList.toggle('hide')
+    })
+  }
+}
+
+function drivers_hider(e) {
+  let theID = e.target.id
+  let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
+  let heat = theID.replace(/\D/g, '')
+  if (theID.match(theRE)) {
+    if (filtered_heat === theID || filtered_heat === '') {
+      for (let x = 0; x < 2; x++) {
+        let where = (x === 0) ? '_home' : '_away'
+        for (let i = 1; i <= 7; i++) {
+          let element = document.querySelector('#d' + i + 'h' + heat + where)
+          if (!(element.classList.contains('color_r') ||
+          element.classList.contains('color_b') ||
+          element.classList.contains('color_y') ||
+          element.classList.contains('color_w'))) {
+            element.parentElement.classList.toggle('hide')
+          }
+        }
+      }
+      document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
+      filtered_heat = (filtered_heat === theID) ? '' : theID
     }
   }
 }

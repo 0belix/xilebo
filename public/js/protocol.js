@@ -7,8 +7,16 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_driver('_away') })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_home') })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_away') })
-  $('.containerFlex').on('click', (e) => { lane_changer(e) })
-  $('.containerFlex').on('click', (e) => { drivers_hider(e) })
+  // $('.containerFlex').on('click', (e) => { lane_changer(e) })
+  $('.containerFlex').on('click', (e) => {
+    if (e.shiftKey) {
+      lane_changer(e)
+    } else if (e.ctrlKey) {
+      drivers_hider(e)
+    } else if (e.altKey) {
+      heats_hider(e)
+    }
+  })
   // $('.containerFlex').on('click', calc)
 })
 

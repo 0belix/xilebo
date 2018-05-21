@@ -90,6 +90,9 @@ function heats_hider(e) {
       document.querySelector('#tot_bonus' + where).classList.toggle('hide')
       document.querySelector('#tot_heats' + where).classList.toggle('hide')
     }
+    document.querySelector('#time_sum').classList.toggle('hide')
+    document.querySelector('#time_bonus').classList.toggle('hide')
+    document.querySelector('#time_heats').classList.toggle('hide')
     document.querySelectorAll('.cell_width_51').forEach((e) => {
       e.classList.toggle('hide')
     })
@@ -104,12 +107,13 @@ function drivers_hider(e) {
     if (filtered_heat === theID || filtered_heat === '') {
       for (let x = 0; x < 2; x++) {
         let where = (x === 0) ? '_home' : '_away'
+        document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
         for (let i = 1; i <= 7; i++) {
           let element = document.querySelector('#d' + i + 'h' + heat + where)
           if (!(element.classList.contains('color_r') ||
-          element.classList.contains('color_b') ||
-          element.classList.contains('color_y') ||
-          element.classList.contains('color_w'))) {
+                element.classList.contains('color_b') ||
+                element.classList.contains('color_y') ||
+                element.classList.contains('color_w'))) {
             element.parentElement.classList.toggle('hide')
           }
         }

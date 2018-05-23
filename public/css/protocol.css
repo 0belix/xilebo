@@ -375,17 +375,23 @@
   content: "4";
 }
 
-/* 3D Styles */ /* https://codepen.io/AMKohn/details/FkzaD */
-a[class*="btn"] { text-decoration: none }
+/* 3D Buttons from https://codepen.io/AMKohn/details/FkzaD */
+.btn-container {
+  position: absolute;
+  z-index: 2;
+  top: 34vh;
+  right: 2vw;
+  width: 20vw;
+  height: 50vh;
+  background-color: var(--white-smoke);
+  border-radius: 4px;
+	text-align: center;
+}
 
+/* 3D Styles */
 .btn-3d {
   position: absolute;
-  right: 2vw;
-  top: 34vh;
   z-index: 3;
-
-	/* position: relative; */
-	display: inline-block;
 	font-size: 2.5vh;
 	padding: 2vh 3vw;
 	color: white;
@@ -396,18 +402,34 @@ a[class*="btn"] { text-decoration: none }
 	text-shadow: 0 0.13vw 0 rgba(0,0,0,0.15);
 }
 
-/* 3D Button Active */
-.btn-3d.active {
-  top: 35vh;
+/* 3D button placement */
+#butt_3 {
+  top: 2vh;
+  left: 2vw;
 }
 
-/* 3D Button Hover */
-.btn-3d.green:hover {
-  background-color: #80C49D;
+#butt_2 {
+  top: 12vh;
+  left: 2vw;
+}
+
+#butt_1 {
+  top: 22vh;
+  left: 2vw;
+}
+
+#butt_0 {
+  top: 32vh;
+  left: 2vw;
+}
+
+/* 3D Button Active */
+.btn-3d.active {
+  top: 3vh;
 }
 
 /* 3D Button Colors */
-.btn-3d.green {
+.btn-3d {
 	background-color: #82c8a0;
 	box-shadow: 0 0 0 0.085vh #82c8a0 inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
@@ -417,7 +439,8 @@ a[class*="btn"] { text-decoration: none }
 }
 
 /* 3D Button Colors Active */
-.btn-3d.green.active { box-shadow: 0 0 0 0.085vh #82c8a0 inset,
+.btn-3d.active {
+  box-shadow: 0 0 0 0.085vh #82c8a0 inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
 		0 0 0 0.085vh rgba(0,0,0,0.4);
 }

@@ -2,7 +2,7 @@
 
 $(document).ready(() => {
   $('a').click((e) => { e.preventDefault() })
-  $('#butt').on('click', (e) => { button_toggler(e) })
+  $('.btn-container').on('click', (e) => { button_toggler(e) })
   $('.containerFlex').on('click', (e) => { calculate_sum_heat('_home') })
   $('.containerFlex').on('click', (e) => { calculate_sum_heat('_away') })
   $('.containerFlex').on('click', (e) => { calculate_sum_driver('_home') })
@@ -26,8 +26,8 @@ let filtered_heat = ''
 
 function button_toggler(e) {
   console.log(e.target.id)
-  if (e.target.id === 'butt') {
-    document.querySelector('#butt').classList.toggle('active')
+  if (e.target.id === 'butt_3') {
+    document.querySelector('#butt_3').classList.toggle('active')
   }
 }
 

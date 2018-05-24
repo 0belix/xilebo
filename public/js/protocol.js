@@ -3,13 +3,9 @@
 $(document).ready(() => {
   $('a').click((e) => { e.preventDefault() })
   $('.btn-container').on('click', (e) => { button_toggler(e) })
-  $('.containerFlex').on('click', (e) => { calculate_sum_heat('_home') })
-  $('.containerFlex').on('click', (e) => { calculate_sum_heat('_away') })
-  $('.containerFlex').on('click', (e) => { calculate_sum_driver('_home') })
-  $('.containerFlex').on('click', (e) => { calculate_sum_driver('_away') })
-  $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_home') })
-  $('.containerFlex').on('click', (e) => { calculate_bonus_driver('_away') })
-  // $('.containerFlex').on('click', (e) => { lane_changer(e) })
+  $('.containerFlex').on('click', (e) => { calculate_sum_heat() })
+  $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
+  $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
   $('.containerFlex').on('click', (e) => {
     if (e.shiftKey) {
       lane_changer(e)
@@ -23,12 +19,10 @@ $(document).ready(() => {
 })
 
 let filtered_heat = ''
+let filtered_driver = false
 
 function button_toggler(e) {
-  console.log(e.target.id)
-  if (e.target.id === 'butt_3') {
-    document.querySelector('#butt_3').classList.toggle('active')
-  }
+  e.target.classList.toggle('active')
 }
 
 function lane_changer(e) {
@@ -54,7 +48,7 @@ function h16_hider(e) {
   let theID = e.target.id
   if (theID === 'h16_home' || theID === 'h16_away') {
     for (let x = 0; x < 2; x++) {
-      let where = x === 0 ? '_home' : '_away'
+      let where = (x === 0) ? '_home' : '_away'
       document.querySelector('#h16' + where).classList.toggle('hide')
       for (let i = 1; i <= 8; i++) {
         document.querySelector('#d' + i + 'h16' + where).classList.toggle('hide')
@@ -71,7 +65,7 @@ function heats_hider(e) {
   let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
   if (theID.match(theRE)) {
     for (let x = 0; x < 2; x++) {
-      let where = x === 0 ? '_home' : '_away'
+      let where = (x === 0) ? '_home' : '_away'
       let sbh = true
       for (let j = 1; j <= 15; j++) {
         if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
@@ -105,6 +99,8 @@ function heats_hider(e) {
     document.querySelectorAll('.cell_width_51').forEach((e) => {
       e.classList.toggle('hide')
     })
+    filtered_driver = (filtered_driver) ? false : true
+    check_buttons()
   }
 }
 
@@ -128,63 +124,73 @@ function drivers_hider(e) {
         }
       }
       document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
-      filtered_heat = (filtered_heat === theID) ? '' : theID
+      filtered_heat = (filtered_heat === '') ? theID : ''
+      check_buttons()
     }
   }
 }
 
-function calculate_sum_heat(who) {
-  for (let j = 1; j <= 16; j++) { 
-    if (check_active_heat(j, who) == 0) {
-      break
+function calculate_sum_heat() {
+  for (let x = 0; x < 2; x++) {
+    let who = (x === 0) ? '_home' : '_away'
+    for (let j = 1; j <= 16; j++) { 
+      if (check_active_heat(j, who) == 0) {
+        break
+      }
+      let sum = 0
+      for (let i = 1; i <= 8; i++) {
+        if (!(i >= 6 && i <= 7 && j >= 15)) {
+          sum += get_points('#d' + i + 'h' + j + who)
+        }
+      }
+      document.querySelector('#h' + j + '_sum' + who).textContent = sum
+      if (j > 1) {
+        sum += parseInt(document.querySelector('#h' + (j - 1) + '_tot' + who).textContent, 10)
+      }
+      document.querySelector('#h' + j + '_tot' + who).textContent = sum
     }
-    let sum = 0
+  }
+}
+
+function calculate_sum_driver() {
+  for (let x = 0; x < 2; x++) {
+    let who = (x === 0) ? '_home' : '_away'
     for (let i = 1; i <= 8; i++) {
-      if (!(i >= 6 && i <= 7 && j >= 15)) {
-        sum += get_points('#d' + i + 'h' + j + who)
+      let sum = 0
+      for (let j = 1; j <= 16; j++) {
+        if (!(i >= 6 && i <= 7 && j >= 15)) {
+          sum += get_points('#d' + i + 'h' + j + who)
+        }
       }
-    }
-    document.querySelector('#h' + j + '_sum' + who).textContent = sum
-    if (j > 1) {
-      sum += parseInt(document.querySelector('#h' + (j - 1) + '_tot' + who).textContent, 10)
-    }
-    document.querySelector('#h' + j + '_tot' + who).textContent = sum
-  }
-}
-
-function calculate_sum_driver(who) {
-  for (let i = 1; i <= 8; i++) {
-    let sum = 0
-    for (let j = 1; j <= 16; j++) {
-      if (!(i >= 6 && i <= 7 && j >= 15)) {
-        sum += get_points('#d' + i + 'h' + j + who)
+      if (check_active_driver(i, who) > 0) {
+        document.querySelector('#d' + i + '_sum' + who).textContent = sum
+        document.querySelector('#d' + i + '_heats' + who).textContent = count_driver_heats(i, who)
       }
-    }
-    if (check_active_driver(i, who) > 0) {
-      document.querySelector('#d' + i + '_sum' + who).textContent = sum
-      document.querySelector('#d' + i + '_heats' + who).textContent = count_driver_heats(i, who)
     }
   }
 }
 
-function calculate_bonus_driver(who) {
-  for (let i = 1; i <= 8; i++) {
-    let sum = 0
-    for (let j = 1; j <= 16; j++) {
-      if (!(i >= 6 && i <= 7 && j >= 15)) {
-        if (get_points('#d' + i + 'h' + j + who) === 2) {
-          if (find_point(3, j, who)) {
-            sum++
-          }
-        } else if (get_points('#d' + i + 'h' + j + who) === 1) {
-          if (find_point(2, j, who)) {
-            sum++
+function calculate_bonus_driver() {
+  for (let x = 0; x < 2; x++) {
+    let who = (x === 0) ? '_home' : '_away'
+    for (let i = 1; i <= 8; i++) {
+      let sum = 0
+      for (let j = 1; j <= 16; j++) {
+        if (!(i >= 6 && i <= 7 && j >= 15)) {
+          if (get_points('#d' + i + 'h' + j + who) === 2) {
+            if (find_point(3, j, who)) {
+              sum++
+            }
+          } else if (get_points('#d' + i + 'h' + j + who) === 1) {
+            if (find_point(2, j, who)) {
+              sum++
+            }
           }
         }
       }
-    }
-    if (sum > 0) {
-      document.querySelector('#d' + i + '_bonus' + who).textContent = sum
+      if (sum > 0) {
+        document.querySelector('#d' + i + '_bonus' + who).textContent = sum
+      }
     }
   }
 }
@@ -247,3 +253,12 @@ function count_driver_heats(driver, who) {
   }
   return x
 }
+
+function check_buttons() {
+  if (filtered_driver && filtered_heat !== '') {
+    document.querySelector('#btn-container-score').classList.remove('hide')
+  } else {
+    document.querySelector('#btn-container-score').classList.add('hide')
+  }
+}
+

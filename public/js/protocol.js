@@ -19,7 +19,7 @@ $(document).ready(() => {
 })
 
 let filtered_heat = ''
-let filtered_driver = false
+let scoring_active = false
 
 function button_toggler(e) {
   e.target.classList.toggle('active')
@@ -99,7 +99,7 @@ function heats_hider(e) {
     document.querySelectorAll('.cell_width_51').forEach((e) => {
       e.classList.toggle('hide')
     })
-    filtered_driver = (filtered_driver) ? false : true
+    scoring_active = (scoring_active) ? false : true
     check_buttons()
   }
 }
@@ -255,10 +255,32 @@ function count_driver_heats(driver, who) {
 }
 
 function check_buttons() {
-  if (filtered_driver && filtered_heat !== '') {
-    document.querySelector('#btn-container-score').classList.remove('hide')
+  console.log(scoring_active)
+  console.log(filtered_heat)
+
+  let score_element = document.querySelector('#btn-container-score')
+  let lanes_colors_element = document.querySelector('#btn-container-lanes-colors')
+
+  if (scoring_active && filtered_heat !== '') {
+    if (score_element.classList.contains('hide')) {
+      score_element.classList.remove('hide')
+    }
+    if (!lanes_colors_element.classList.contains('hide')) {
+      lanes_colors_element.classList.add('hide')
+    }
+  } else if (scoring_active && filtered_heat === '') {
+    if (lanes_colors_element.classList.contains('hide')) {
+      lanes_colors_element.classList.remove('hide')
+    }
+    if (!score_element.classList.contains('hide')) {
+      score_element.classList.add('hide')
+    }
   } else {
-    document.querySelector('#btn-container-score').classList.add('hide')
+    if (!score_element.classList.contains('hide')) {
+      score_element.classList.add('hide')
+    }
+    if (!lanes_colors_element.classList.contains('hide')) {
+      lanes_colors_element.classList.add('hide')
+    }
   }
 }
-

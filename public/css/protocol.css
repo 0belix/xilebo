@@ -376,14 +376,30 @@
 }
 
 /* 3D Buttons from https://codepen.io/AMKohn/details/FkzaD */
+.btn-container {
+  user-select: none;
+}
+
 #btn-container-round {
   position: absolute;
   z-index: 2;
   right: 4vw;
-  bottom: 5vh;
+  bottom: 4vh;
   width: 6vw;
   height: 13vh;
   /* background-color: rgba(0,0,0,0.15); */
+  border-radius: 0.3vw;
+	text-align: center;
+}
+
+#btn-container-misc {
+  position: absolute;
+  z-index: 2;
+  top: 10vh;
+  right: 2.5vw;
+  width: 9vw;
+  height: 60vh;
+  background-color: rgba(0,0,0,0.69);
   border-radius: 0.3vw;
 	text-align: center;
 }
@@ -429,6 +445,31 @@
 }
 
 /* 3D button placement */
+#butt_reverse_lanes {
+  top: 2vh;
+  left: 1.5vw;
+}
+
+#butt_h16 {
+  top: 12vh;
+  left: 1.5vw;
+}
+
+#butt_d8_home {
+  top: 22vh;
+  left: 1.5vw;
+}
+
+#butt_d8_away {
+  top: 34vh;
+  left: 1.5vw;
+}
+
+#butt_alter_lane_color {
+  top: 46vh;
+  left: 1.5vw;
+}
+
 #butt_round,
 #butt_l1,
 #butt_3 {
@@ -508,6 +549,26 @@
 }
 
 /* 3D Button Active */
+#butt_reverse_lanes.active {
+  top: 3vh;
+}
+
+#butt_h16.active {
+  top: 13vh;
+}
+
+#butt_d8_home.active {
+  top: 23vh;
+}
+
+#butt_d8_away.active {
+  top: 35vh;
+}
+
+#butt_alter_lane_color.active {
+  top: 47vh;
+}
+
 #butt_round.active,
 #butt_l1.active,
 #butt_3.active {

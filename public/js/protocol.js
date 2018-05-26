@@ -20,9 +20,20 @@ $(document).ready(() => {
 
 let filtered_heat = ''
 let scoring_active = false
+let lane_direction = 'right'
 
 function button_toggler(e) {
+  let theID = e.target.id
   e.target.classList.toggle('active')
+  if (theID === 'butt_round') {
+    document.querySelector('#btn-container-misc').classList.toggle('hide')
+  } else if (theID === 'butt_reverse_lanes') {
+    lane_changer(e)
+    lane_direction = (lane_direction === 'right') ? 'left' : 'right'
+    setTimeout(() => { document.querySelector('#butt_reverse_lanes').classList.toggle('active') }, 666);
+    setTimeout(() => { document.querySelector('#btn-container-misc').classList.toggle('hide') }, 1234);
+    setTimeout(() => { document.querySelector('#butt_round').classList.toggle('active') }, 1900);
+  }
 }
 
 function lane_changer(e) {

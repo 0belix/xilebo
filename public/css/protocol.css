@@ -376,6 +376,18 @@
 }
 
 /* 3D Buttons from https://codepen.io/AMKohn/details/FkzaD */
+#btn-container-round {
+  position: absolute;
+  z-index: 2;
+  right: 4vw;
+  bottom: 5vh;
+  width: 6vw;
+  height: 13vh;
+  /* background-color: rgba(0,0,0,0.15); */
+  border-radius: 0.3vw;
+	text-align: center;
+}
+
 #btn-container-lanes-colors,
 #btn-container-score {
   position: absolute;
@@ -390,6 +402,19 @@
 }
 
 /* 3D Styles */
+#butt_round {
+  position: absolute;
+  z-index: 3;
+  font-size: 2.5vh;
+  width: 6vw;
+	padding: 4.8vh 0;
+	color: white;
+	border-radius: 999vw;
+	text-align: center;
+	transition: all .08s linear;
+	text-shadow: 0 0.13vw 0 rgba(0,0,0,0.15);
+}
+
 .btn-3d {
   position: absolute;
   z-index: 3;
@@ -404,6 +429,7 @@
 }
 
 /* 3D button placement */
+#butt_round,
 #butt_l1,
 #butt_3 {
   top: 0vh;
@@ -482,6 +508,7 @@
 }
 
 /* 3D Button Active */
+#butt_round.active,
 #butt_l1.active,
 #butt_3.active {
   top: 1vh;
@@ -546,6 +573,7 @@
 }
 
 /* 3D Button Colors */
+#butt_round,
 .btn-3d {
 	background-color: #82c8a0;
 	box-shadow: 0 0 0 0.085vh #82c8a0 inset,
@@ -556,6 +584,7 @@
 }
 
 /* 3D Button Colors Active */
+#butt_round.active,
 .btn-3d.active {
   box-shadow: 0 0 0 0.085vh #82c8a0 inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,

@@ -30,10 +30,23 @@ function button_toggler(e) {
   } else if (theID === 'butt_reverse_lanes') {
     lane_changer(e)
     lane_direction = (lane_direction === 'right') ? 'left' : 'right'
-    setTimeout(() => { document.querySelector('#butt_reverse_lanes').classList.toggle('active') }, 666);
-    setTimeout(() => { document.querySelector('#btn-container-misc').classList.toggle('hide') }, 1234);
-    setTimeout(() => { document.querySelector('#butt_round').classList.toggle('active') }, 1900);
+    auto_button_hider(theID)
+  } else if (theID === 'butt_h16') {
+    h16_hider()
+    auto_button_hider(theID)
+  } else if (theID === 'butt_d8_home') {
+    d8_hider('_home')
+    auto_button_hider(theID)
+  } else if (theID === 'butt_d8_away') {
+    d8_hider('_away')
+    auto_button_hider(theID)
   }
+}
+
+function auto_button_hider(element) {
+  setTimeout(() => { document.querySelector('#' + element).classList.toggle('active') }, 666)
+  setTimeout(() => { document.querySelector('#btn-container-misc').classList.toggle('hide') }, 1234)
+  setTimeout(() => { document.querySelector('#butt_round').classList.toggle('active') }, 1900)
 }
 
 function lane_changer(e) {
@@ -55,20 +68,21 @@ function lane_changer(e) {
   })
 }
 
-function h16_hider(e) {
-  let theID = e.target.id
-  if (theID === 'h16_home' || theID === 'h16_away') {
-    for (let x = 0; x < 2; x++) {
-      let where = (x === 0) ? '_home' : '_away'
-      document.querySelector('#h16' + where).classList.toggle('hide')
-      for (let i = 1; i <= 8; i++) {
-        document.querySelector('#d' + i + 'h16' + where).classList.toggle('hide')
-      }
-      document.querySelector('#h16_sum' + where).classList.toggle('hide')
-      document.querySelector('#h16_tot' + where).classList.toggle('hide')
+function h16_hider() {
+  for (let x = 0; x < 2; x++) {
+    let where = (x === 0) ? '_home' : '_away'
+    document.querySelector('#h16' + where).classList.toggle('hide')
+    for (let i = 1; i <= 8; i++) {
+      document.querySelector('#d' + i + 'h16' + where).classList.toggle('hide')
     }
-    document.querySelector('#h16_time').classList.toggle('hide')
+    document.querySelector('#h16_sum' + where).classList.toggle('hide')
+    document.querySelector('#h16_tot' + where).classList.toggle('hide')
   }
+  document.querySelector('#h16_time').classList.toggle('hide')
+}
+
+function d8_hider(where) {
+  document.querySelector('#d8_row' + where).classList.toggle('hide')
 }
 
 function heats_hider(e) {

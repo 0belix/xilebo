@@ -1,32 +1,43 @@
 // 'use strict'
 
+// $(document).ready(() => {
+//   $('a').click((e) => { e.preventDefault() })
+//   $('.containerFlex').on('click', (e) => {
+//     if (e.shiftKey) {
+//       lane_changer(e)
+//     } else if (e.ctrlKey) {
+//       drivers_hider(e)
+//     } else if (e.altKey) {
+//       heats_hider(e)
+//     }
+//   })
+//   $('.containerFlex').on('click', calc)
+// })
+
 $(document).ready(() => {
-  $('a').click((e) => { e.preventDefault() })
   $('.btn-container').on('click', (e) => { button_toggler(e) })
   $('.containerFlex').on('click', (e) => { calculate_sum_heat() })
   $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
-  $('.containerFlex').on('click', (e) => {
-    if (e.shiftKey) {
-      lane_changer(e)
-    } else if (e.ctrlKey) {
-      drivers_hider(e)
-    } else if (e.altKey) {
-      heats_hider(e)
-    }
-  })
-  // $('.containerFlex').on('click', calc)
+  $('.containerFlex').on('click', (e) => { drivers_hider(e) })
+  $('.containerFlex').on('click', (e) => { heats_hider(e) })
 })
 
 let filtered_heat = ''
 let scoring_active = false
+let scoring_allowed = false
 let lane_direction = 'right'
 
 function button_toggler(e) {
   let theID = e.target.id
   e.target.classList.toggle('active')
   if (theID === 'butt_round') {
-    document.querySelector('#btn-container-misc').classList.toggle('hide')
+    if (filtered_heat !== '') {
+      scoring_allowed = (scoring_allowed) ? false : true
+      heats_hider(filtered_heat)
+    } else {
+      document.querySelector('#btn-container-misc').classList.toggle('hide')
+    }
   } else if (theID === 'butt_reverse_lanes') {
     lane_changer(e)
     lane_direction = (lane_direction === 'right') ? 'left' : 'right'
@@ -40,6 +51,8 @@ function button_toggler(e) {
   } else if (theID === 'butt_d8_away') {
     d8_hider('_away')
     auto_button_hider(theID)
+  } else if (theID === 'butt_alter_lane_color') {
+    scoring_allowed = (scoring_allowed) ? false : true
   }
 }
 
@@ -86,9 +99,14 @@ function d8_hider(where) {
 }
 
 function heats_hider(e) {
-  let theID = e.target.id
+  let theID
+  if (typeof e === 'string') {
+    theID = e
+  } else {
+    theID = e.target.id
+  }
   let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
-  if (theID.match(theRE)) {
+  if (theID.match(theRE) && (scoring_allowed || scoring_active)) {
     for (let x = 0; x < 2; x++) {
       let where = (x === 0) ? '_home' : '_away'
       let sbh = true
@@ -133,7 +151,7 @@ function drivers_hider(e) {
   let theID = e.target.id
   let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
   let heat = theID.replace(/\D/g, '')
-  if (theID.match(theRE)) {
+  if (theID.match(theRE) && scoring_allowed === false && scoring_active === false) {
     if (filtered_heat === theID || filtered_heat === '') {
       for (let x = 0; x < 2; x++) {
         let where = (x === 0) ? '_home' : '_away'
@@ -153,6 +171,9 @@ function drivers_hider(e) {
       check_buttons()
     }
   }
+}
+
+function checker() {
 }
 
 function calculate_sum_heat() {
@@ -280,9 +301,6 @@ function count_driver_heats(driver, who) {
 }
 
 function check_buttons() {
-  console.log(scoring_active)
-  console.log(filtered_heat)
-
   let score_element = document.querySelector('#btn-container-score')
   let lanes_colors_element = document.querySelector('#btn-container-lanes-colors')
 

@@ -6,9 +6,9 @@
 //     if (e.shiftKey) {
 //       lane_changer(e)
 //     } else if (e.ctrlKey) {
-//       drivers_hider(e)
+//       hider_rows(e)
 //     } else if (e.altKey) {
-//       heats_hider(e)
+//       hider_columns(e)
 //     }
 //   })
 //   $('.containerFlex').on('click', calc)
@@ -19,22 +19,23 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_heat() })
   $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
-  $('.containerFlex').on('click', (e) => { drivers_hider(e) })
-  $('.containerFlex').on('click', (e) => { heats_hider(e) })
+  $('.containerFlex').on('click', (e) => { checker(e) })
+  // $('.containerFlex').on('click', (e) => { hider_rows(e) })
+  // $('.containerFlex').on('click', (e) => { hider_columns(e) })
 })
 
-let filtered_heat = ''
-let scoring_active = false
-let scoring_allowed = false
+let selected_column = ''
+let columns_are_hidden = false
+let scoring_in_progress = false
 let lane_direction = 'right'
 
 function button_toggler(e) {
   let theID = e.target.id
-  e.target.classList.toggle('active')
+  // e.target.classList.toggle('active')
   if (theID === 'butt_round') {
-    if (filtered_heat !== '') {
-      scoring_allowed = (scoring_allowed) ? false : true
-      heats_hider(filtered_heat)
+    if (selected_column !== '') {
+      scoring_in_progress = (scoring_in_progress) ? false : true
+      hider_columns(selected_column)
     } else {
       document.querySelector('#btn-container-misc').classList.toggle('hide')
     }
@@ -43,7 +44,7 @@ function button_toggler(e) {
     lane_direction = (lane_direction === 'right') ? 'left' : 'right'
     auto_button_hider(theID)
   } else if (theID === 'butt_h16') {
-    h16_hider()
+    hider_h16()
     auto_button_hider(theID)
   } else if (theID === 'butt_d8_home') {
     d8_hider('_home')
@@ -52,14 +53,34 @@ function button_toggler(e) {
     d8_hider('_away')
     auto_button_hider(theID)
   } else if (theID === 'butt_alter_lane_color') {
-    scoring_allowed = (scoring_allowed) ? false : true
+    if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {
+      scoring_in_progress = true
+    } else {
+      scoring_in_progress = false
+      if (columns_are_hidden) {
+        hider_columns(selected_column)
+      }
+      auto_button_hider(theID)
+    }
   }
 }
 
 function auto_button_hider(element) {
-  setTimeout(() => { document.querySelector('#' + element).classList.toggle('active') }, 666)
-  setTimeout(() => { document.querySelector('#btn-container-misc').classList.toggle('hide') }, 1234)
-  setTimeout(() => { document.querySelector('#butt_round').classList.toggle('active') }, 1900)
+  let current_butt = document.querySelector('#' + element)
+  let btn_container_misc = document.querySelector('#btn-container-misc')
+  let butt_round = document.querySelector('#butt_round')
+
+  if (current_butt.classList.contains('active')) {
+    setTimeout(() => { current_butt.classList.toggle('active') }, 666)
+  }
+
+  if (btn_container_misc.classList.contains('hide')) {
+    setTimeout(() => { btn_container_misc.classList.toggle('hide') }, 1234)
+  }
+
+  if (butt_round.classList.contains('active')) {
+    setTimeout(() => { butt_round.classList.toggle('active') }, 1900)
+  }
 }
 
 function lane_changer(e) {
@@ -81,7 +102,7 @@ function lane_changer(e) {
   })
 }
 
-function h16_hider() {
+function hider_h16() {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
     document.querySelector('#h16' + where).classList.toggle('hide')
@@ -98,7 +119,7 @@ function d8_hider(where) {
   document.querySelector('#d8_row' + where).classList.toggle('hide')
 }
 
-function heats_hider(e) {
+function hider_columns(e) {
   let theID
   if (typeof e === 'string') {
     theID = e
@@ -106,7 +127,7 @@ function heats_hider(e) {
     theID = e.target.id
   }
   let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
-  if (theID.match(theRE) && (scoring_allowed || scoring_active)) {
+  if (theID.match(theRE) && (scoring_in_progress || columns_are_hidden)) {
     for (let x = 0; x < 2; x++) {
       let where = (x === 0) ? '_home' : '_away'
       let sbh = true
@@ -142,38 +163,87 @@ function heats_hider(e) {
     document.querySelectorAll('.cell_width_51').forEach((e) => {
       e.classList.toggle('hide')
     })
-    scoring_active = (scoring_active) ? false : true
-    check_buttons()
+    columns_are_hidden = (columns_are_hidden) ? false : true
+    selected_column = (selected_column === '') ? theID : ''
+    // check_button_containers()
   }
 }
 
-function drivers_hider(e) {
-  let theID = e.target.id
-  let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
-  let heat = theID.replace(/\D/g, '')
-  if (theID.match(theRE) && scoring_allowed === false && scoring_active === false) {
-    if (filtered_heat === theID || filtered_heat === '') {
-      for (let x = 0; x < 2; x++) {
-        let where = (x === 0) ? '_home' : '_away'
-        document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
-        for (let i = 1; i <= 7; i++) {
-          let element = document.querySelector('#d' + i + 'h' + heat + where)
-          if (!(element.classList.contains('color_r') ||
-                element.classList.contains('color_b') ||
-                element.classList.contains('color_y') ||
-                element.classList.contains('color_w'))) {
-            element.parentElement.classList.toggle('hide')
-          }
-        }
+// function hider_rows(e) {
+//   let theID = e.target.id
+//   let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
+//   let heat = theID.replace(/\D/g, '')
+//   if (theID.match(theRE) && scoring_in_progress === false && columns_are_hidden === false) {
+//     if (selected_column === theID || selected_column === '') {
+//       for (let x = 0; x < 2; x++) {
+//         let where = (x === 0) ? '_home' : '_away'
+//         document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
+//         for (let i = 1; i <= 7; i++) {
+//           let element = document.querySelector('#d' + i + 'h' + heat + where)
+//           if (!(element.classList.contains('color_r') ||
+//                 element.classList.contains('color_b') ||
+//                 element.classList.contains('color_y') ||
+//                 element.classList.contains('color_w'))) {
+//             element.parentElement.classList.toggle('hide')
+//           }
+//         }
+//       }
+//       document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
+//       selected_column = (selected_column === '') ? theID : ''
+//       // check_button_containers()
+//     }
+//   }
+// }
+
+function hider_rows(e) {
+  let heat = e.replace(/\D/g, '')
+  for (let x = 0; x < 2; x++) {
+    let where = (x === 0) ? '_home' : '_away'
+    document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
+    for (let i = 1; i <= 7; i++) {
+      let element = document.querySelector('#d' + i + 'h' + heat + where)
+      if (!(element.classList.contains('color_r') ||
+            element.classList.contains('color_b') ||
+            element.classList.contains('color_y') ||
+            element.classList.contains('color_w'))) {
+        element.parentElement.classList.toggle('hide')
       }
-      document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
-      filtered_heat = (filtered_heat === '') ? theID : ''
-      check_buttons()
     }
   }
+  document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
 }
 
-function checker() {
+function checker(e) {
+  /* 
+  Från start:
+    gömma rader:
+      round NOT active
+        => klicka på en heat
+    gömma kolumner:
+      round active
+      edit active
+        => klicka på en heat
+    visa rader
+      round NOT active
+        => klicka på en heat
+    visa kolumner
+        => klicka på edit
+      round active
+      edit active
+
+  När rader ÄR gömda:
+    gömma kolumner:
+      variable heat EJ tom
+        => klicka på round
+  */
+ let theID = e.target.id
+ let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
+ if (theID.match(theRE)) {
+   selected_column = theID
+   if (!document.querySelector('#butt_round').classList.contains('active')) {
+    hider_rows(theID)
+   }
+ }
 }
 
 function calculate_sum_heat() {
@@ -300,30 +370,30 @@ function count_driver_heats(driver, who) {
   return x
 }
 
-function check_buttons() {
-  let score_element = document.querySelector('#btn-container-score')
-  let lanes_colors_element = document.querySelector('#btn-container-lanes-colors')
+function check_button_containers() {
+  let btn_container_score = document.querySelector('#btn-container-score')
+  let btn_container_lanes_colors = document.querySelector('#btn-container-lanes-colors')
 
-  if (scoring_active && filtered_heat !== '') {
-    if (score_element.classList.contains('hide')) {
-      score_element.classList.remove('hide')
+  if (columns_are_hidden && selected_column !== '') {
+    if (btn_container_score.classList.contains('hide')) {
+      btn_container_score.classList.remove('hide')
     }
-    if (!lanes_colors_element.classList.contains('hide')) {
-      lanes_colors_element.classList.add('hide')
+    if (!btn_container_lanes_colors.classList.contains('hide')) {
+      btn_container_lanes_colors.classList.add('hide')
     }
-  } else if (scoring_active && filtered_heat === '') {
-    if (lanes_colors_element.classList.contains('hide')) {
-      lanes_colors_element.classList.remove('hide')
+  } else if (columns_are_hidden && selected_column === '') {
+    if (btn_container_lanes_colors.classList.contains('hide')) {
+      btn_container_lanes_colors.classList.remove('hide')
     }
-    if (!score_element.classList.contains('hide')) {
-      score_element.classList.add('hide')
+    if (!btn_container_score.classList.contains('hide')) {
+      btn_container_score.classList.add('hide')
     }
   } else {
-    if (!score_element.classList.contains('hide')) {
-      score_element.classList.add('hide')
+    if (!btn_container_score.classList.contains('hide')) {
+      btn_container_score.classList.add('hide')
     }
-    if (!lanes_colors_element.classList.contains('hide')) {
-      lanes_colors_element.classList.add('hide')
+    if (!btn_container_lanes_colors.classList.contains('hide')) {
+      btn_container_lanes_colors.classList.add('hide')
     }
   }
 }

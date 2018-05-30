@@ -26,6 +26,7 @@ $(document).ready(() => {
 
 let selected_column = ''
 let columns_are_hidden = false
+let rows_are_hidden = false
 let scoring_in_progress = false
 let lane_direction = 'right'
 
@@ -33,9 +34,10 @@ function button_toggler(e) {
   let theID = e.target.id
   // e.target.classList.toggle('active')
   if (theID === 'butt_round') {
+    e.target.classList.toggle('active')
     if (selected_column !== '') {
-      scoring_in_progress = (scoring_in_progress) ? false : true
       hider_columns(selected_column)
+      document.querySelector('#btn-container-score').classList.toggle('hide')
     } else {
       document.querySelector('#btn-container-misc').classList.toggle('hide')
     }
@@ -53,14 +55,21 @@ function button_toggler(e) {
     d8_hider('_away')
     auto_button_hider(theID)
   } else if (theID === 'butt_alter_lane_color') {
-    if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {
-      scoring_in_progress = true
-    } else {
-      scoring_in_progress = false
-      if (columns_are_hidden) {
-        hider_columns(selected_column)
-      }
-      auto_button_hider(theID)
+    e.target.classList.toggle('active')
+    if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {}
+  }
+}
+
+function container_toggler(e) {
+  let btn_container_misc = document.querySelector('#btn-container-misc')
+  let btn_container_lanes_colors = document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
+  let btn_container_score = document.querySelector('#btn-container-score').classList.toggle('hide')
+
+  let butt_round = document.querySelector('#butt_round')
+
+  if (selected_column === '' && butt_round.classList.contains('active')) {
+    if (!btn_container_misc.classList.contains('hide')) {
+      btn_container_misc.classList.add('hide')
     }
   }
 }
@@ -119,54 +128,92 @@ function d8_hider(where) {
   document.querySelector('#d8_row' + where).classList.toggle('hide')
 }
 
-function hider_columns(e) {
-  let theID
-  if (typeof e === 'string') {
-    theID = e
-  } else {
-    theID = e.target.id
-  }
-  let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
-  if (theID.match(theRE) && (scoring_in_progress || columns_are_hidden)) {
-    for (let x = 0; x < 2; x++) {
-      let where = (x === 0) ? '_home' : '_away'
-      let sbh = true
-      for (let j = 1; j <= 15; j++) {
-        if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
-        document.querySelector('#h' + j + '' + where).classList.toggle('hide')
-        for (let i = 1; i <= 8; i++) {
-          document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
-          if (sbh) {
-            document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
-            document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
-            document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
-          }
+// function hider_columns(e) {
+//   let theID
+//   if (typeof e === 'string') {
+//     theID = e
+//   } else {
+//     theID = e.target.id
+//   }
+//   let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
+//   if (theID.match(theRE) && (scoring_in_progress || columns_are_hidden)) {
+//     for (let x = 0; x < 2; x++) {
+//       let where = (x === 0) ? '_home' : '_away'
+//       let sbh = true
+//       for (let j = 1; j <= 15; j++) {
+//         if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
+//         document.querySelector('#h' + j + '' + where).classList.toggle('hide')
+//         for (let i = 1; i <= 8; i++) {
+//           document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
+//           if (sbh) {
+//             document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
+//             document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
+//             document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
+//           }
+//         }
+//         document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
+//         document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
+//         if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
+//         sbh = false
+//       }
+//       document.querySelector('#sum' + where).classList.toggle('hide')
+//       document.querySelector('#bonus' + where).classList.toggle('hide')
+//       document.querySelector('#heats' + where).classList.toggle('hide')
+//       document.querySelector('#sum_sum' + where).classList.toggle('hide')
+//       document.querySelector('#sum_bonus' + where).classList.toggle('hide')
+//       document.querySelector('#sum_heats' + where).classList.toggle('hide')
+//       document.querySelector('#tot_sum' + where).classList.toggle('hide')
+//       document.querySelector('#tot_bonus' + where).classList.toggle('hide')
+//       document.querySelector('#tot_heats' + where).classList.toggle('hide')
+//     }
+//     document.querySelector('#time_sum').classList.toggle('hide')
+//     document.querySelector('#time_bonus').classList.toggle('hide')
+//     document.querySelector('#time_heats').classList.toggle('hide')
+//     document.querySelectorAll('.cell_width_51').forEach((e) => {
+//       e.classList.toggle('hide')
+//     })
+//     columns_are_hidden = (columns_are_hidden) ? false : true
+//     selected_column = (selected_column === '') ? theID : ''
+//     // check_button_containers()
+//   }
+// }
+
+function hider_columns(heat) {
+  for (let x = 0; x < 2; x++) {
+    let where = (x === 0) ? '_home' : '_away'
+    let sbh = true
+    for (let j = 1; j <= 15; j++) {
+      if (heat === j) { continue }
+      document.querySelector('#h' + j + '' + where).classList.toggle('hide')
+      for (let i = 1; i <= 8; i++) {
+        document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
+        if (sbh) {
+          document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
+          document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
+          document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
         }
-        document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
-        document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
-        if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
-        sbh = false
       }
-      document.querySelector('#sum' + where).classList.toggle('hide')
-      document.querySelector('#bonus' + where).classList.toggle('hide')
-      document.querySelector('#heats' + where).classList.toggle('hide')
-      document.querySelector('#sum_sum' + where).classList.toggle('hide')
-      document.querySelector('#sum_bonus' + where).classList.toggle('hide')
-      document.querySelector('#sum_heats' + where).classList.toggle('hide')
-      document.querySelector('#tot_sum' + where).classList.toggle('hide')
-      document.querySelector('#tot_bonus' + where).classList.toggle('hide')
-      document.querySelector('#tot_heats' + where).classList.toggle('hide')
+      document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
+      document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
+      if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
+      sbh = false
     }
-    document.querySelector('#time_sum').classList.toggle('hide')
-    document.querySelector('#time_bonus').classList.toggle('hide')
-    document.querySelector('#time_heats').classList.toggle('hide')
-    document.querySelectorAll('.cell_width_51').forEach((e) => {
-      e.classList.toggle('hide')
-    })
-    columns_are_hidden = (columns_are_hidden) ? false : true
-    selected_column = (selected_column === '') ? theID : ''
-    // check_button_containers()
+    document.querySelector('#sum' + where).classList.toggle('hide')
+    document.querySelector('#bonus' + where).classList.toggle('hide')
+    document.querySelector('#heats' + where).classList.toggle('hide')
+    document.querySelector('#sum_sum' + where).classList.toggle('hide')
+    document.querySelector('#sum_bonus' + where).classList.toggle('hide')
+    document.querySelector('#sum_heats' + where).classList.toggle('hide')
+    document.querySelector('#tot_sum' + where).classList.toggle('hide')
+    document.querySelector('#tot_bonus' + where).classList.toggle('hide')
+    document.querySelector('#tot_heats' + where).classList.toggle('hide')
   }
+  document.querySelector('#time_sum').classList.toggle('hide')
+  document.querySelector('#time_bonus').classList.toggle('hide')
+  document.querySelector('#time_heats').classList.toggle('hide')
+  document.querySelectorAll('.cell_width_51').forEach((e) => {
+    e.classList.toggle('hide')
+  })
 }
 
 // function hider_rows(e) {
@@ -195,8 +242,7 @@ function hider_columns(e) {
 //   }
 // }
 
-function hider_rows(e) {
-  let heat = e.replace(/\D/g, '')
+function hider_rows(heat) {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
     document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
@@ -214,6 +260,22 @@ function hider_rows(e) {
 }
 
 function checker(e) {
+  let theID = e.target.id
+  let heat = parseInt(theID.replace(/\D/g, ''), 10)
+  let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
+  let e_round = document.querySelector('#butt_round')
+  let e_alter_lane_color = document.querySelector('#butt_alter_lane_color')
+  if (theID.match(theRE)) {
+    if (!e_round.classList.contains('active')) {
+      hider_rows(heat)
+      selected_column = (selected_column === '') ? heat : ''
+    } else if (e_alter_lane_color.classList.contains('active')) {
+      hider_columns(heat)
+      selected_column = (selected_column === '') ? heat : ''
+    }
+  }
+}
+
   /* 
   Från start:
     gömma rader:
@@ -236,15 +298,6 @@ function checker(e) {
       variable heat EJ tom
         => klicka på round
   */
- let theID = e.target.id
- let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
- if (theID.match(theRE)) {
-   selected_column = theID
-   if (!document.querySelector('#butt_round').classList.contains('active')) {
-    hider_rows(theID)
-   }
- }
-}
 
 function calculate_sum_heat() {
   for (let x = 0; x < 2; x++) {

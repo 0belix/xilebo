@@ -20,21 +20,15 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
   $('.containerFlex').on('click', (e) => { hider_rc(e) })
-  // $('.containerFlex').on('click', (e) => { hider_rows(e) })
-  // $('.containerFlex').on('click', (e) => { hider_columns(e) })
 })
 
 let selected_column = ''
-let columns_are_hidden = false
-let rows_are_hidden = false
-let scoring_in_progress = false
 let lane_direction = 'right'
 
 function button_toggler(e) {
   let theID = e.target.id
-  // e.target.classList.toggle('active')
+  e.target.classList.toggle('active')
   if (theID === 'butt_round') {
-    e.target.classList.toggle('active')
     if (selected_column === '') {
       document.querySelector('#btn-container-misc').classList.toggle('hide')
     } else {
@@ -60,23 +54,6 @@ function button_toggler(e) {
   } else if (theID === 'butt_d8_away') {
     d8_hider('_away')
     auto_button_hider(theID)
-  } else if (theID === 'butt_alter_lane_color') {
-    // e.target.classList.toggle('active')
-    // if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {}
-  }
-}
-
-function container_toggler(e) {
-  let btn_container_misc = document.querySelector('#btn-container-misc')
-  let btn_container_lanes_colors = document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
-  let btn_container_score = document.querySelector('#btn-container-score').classList.toggle('hide')
-
-  let butt_round = document.querySelector('#butt_round')
-
-  if (selected_column === '' && butt_round.classList.contains('active')) {
-    if (!btn_container_misc.classList.contains('hide')) {
-      btn_container_misc.classList.add('hide')
-    }
   }
 }
 
@@ -86,15 +63,15 @@ function auto_button_hider(element) {
   let butt_round = document.querySelector('#butt_round')
 
   if (current_butt.classList.contains('active')) {
-    setTimeout(() => { current_butt.classList.toggle('active') }, 666)
+    setTimeout(() => { current_butt.classList.remove('active') }, 666)
   }
 
-  if (btn_container_misc.classList.contains('hide')) {
-    setTimeout(() => { btn_container_misc.classList.toggle('hide') }, 1234)
+  if (!btn_container_misc.classList.contains('hide')) {
+    setTimeout(() => { btn_container_misc.classList.add('hide') }, 1234)
   }
 
   if (butt_round.classList.contains('active')) {
-    setTimeout(() => { butt_round.classList.toggle('active') }, 1900)
+    setTimeout(() => { butt_round.classList.remove('active') }, 1900)
   }
 }
 
@@ -134,62 +111,14 @@ function d8_hider(where) {
   document.querySelector('#d8_row' + where).classList.toggle('hide')
 }
 
-// function hider_columns(e) {
-//   let theID
-//   if (typeof e === 'string') {
-//     theID = e
-//   } else {
-//     theID = e.target.id
-//   }
-//   let theRE = /(^h([1-9]|1[0-5])_home$|^h([1-9]|1[0-5])_away$)/g
-//   if (theID.match(theRE) && (scoring_in_progress || columns_are_hidden)) {
-//     for (let x = 0; x < 2; x++) {
-//       let where = (x === 0) ? '_home' : '_away'
-//       let sbh = true
-//       for (let j = 1; j <= 15; j++) {
-//         if (theID === 'h' + j + '_home' || theID === 'h' + j + '_away') { continue }
-//         document.querySelector('#h' + j + '' + where).classList.toggle('hide')
-//         for (let i = 1; i <= 8; i++) {
-//           document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
-//           if (sbh) {
-//             document.querySelector('#d' + i + '_sum' + where).classList.toggle('hide')
-//             document.querySelector('#d' + i + '_bonus' + where).classList.toggle('hide')
-//             document.querySelector('#d' + i + '_heats' + where).classList.toggle('hide')
-//           }
-//         }
-//         document.querySelector('#h' + j + '_sum' + where).classList.toggle('hide')
-//         document.querySelector('#h' + j + '_tot' + where).classList.toggle('hide')
-//         if (x === 1) { document.querySelector('#h' + j + '_time').classList.toggle('hide') }
-//         sbh = false
-//       }
-//       document.querySelector('#sum' + where).classList.toggle('hide')
-//       document.querySelector('#bonus' + where).classList.toggle('hide')
-//       document.querySelector('#heats' + where).classList.toggle('hide')
-//       document.querySelector('#sum_sum' + where).classList.toggle('hide')
-//       document.querySelector('#sum_bonus' + where).classList.toggle('hide')
-//       document.querySelector('#sum_heats' + where).classList.toggle('hide')
-//       document.querySelector('#tot_sum' + where).classList.toggle('hide')
-//       document.querySelector('#tot_bonus' + where).classList.toggle('hide')
-//       document.querySelector('#tot_heats' + where).classList.toggle('hide')
-//     }
-//     document.querySelector('#time_sum').classList.toggle('hide')
-//     document.querySelector('#time_bonus').classList.toggle('hide')
-//     document.querySelector('#time_heats').classList.toggle('hide')
-//     document.querySelectorAll('.cell_width_51').forEach((e) => {
-//       e.classList.toggle('hide')
-//     })
-//     columns_are_hidden = (columns_are_hidden) ? false : true
-//     selected_column = (selected_column === '') ? theID : ''
-//     // check_button_containers()
-//   }
-// }
-
 function hider_columns(heat) {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
     let sbh = true
     for (let j = 1; j <= 15; j++) {
-      if (heat === j) { continue }
+      if (heat === j) {
+        continue
+      }
       document.querySelector('#h' + j + '' + where).classList.toggle('hide')
       for (let i = 1; i <= 8; i++) {
         document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
@@ -222,32 +151,6 @@ function hider_columns(heat) {
   })
 }
 
-// function hider_rows(e) {
-//   let theID = e.target.id
-//   let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
-//   let heat = theID.replace(/\D/g, '')
-//   if (theID.match(theRE) && scoring_in_progress === false && columns_are_hidden === false) {
-//     if (selected_column === theID || selected_column === '') {
-//       for (let x = 0; x < 2; x++) {
-//         let where = (x === 0) ? '_home' : '_away'
-//         document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
-//         for (let i = 1; i <= 7; i++) {
-//           let element = document.querySelector('#d' + i + 'h' + heat + where)
-//           if (!(element.classList.contains('color_r') ||
-//                 element.classList.contains('color_b') ||
-//                 element.classList.contains('color_y') ||
-//                 element.classList.contains('color_w'))) {
-//             element.parentElement.classList.toggle('hide')
-//           }
-//         }
-//       }
-//       document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
-//       selected_column = (selected_column === '') ? theID : ''
-//       // check_button_containers()
-//     }
-//   }
-// }
-
 function hider_rows(heat) {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
@@ -273,8 +176,10 @@ function hider_rc(e) {
   let e_alter_lane_color = document.querySelector('#butt_alter_lane_color')
   if (theID.match(theRE)) {
     if (!e_round.classList.contains('active')) {
-      hider_rows(heat)
-      selected_column = (selected_column === '') ? heat : ''
+      if (selected_column === '' || selected_column === heat) {
+        hider_rows(heat)
+        selected_column = (selected_column === '') ? heat : ''
+      }
     } else if (e_round.classList.contains('active') && selected_column === '') {
       hider_columns(heat)
       selected_column = (selected_column === '') ? heat : ''
@@ -282,36 +187,9 @@ function hider_rc(e) {
       if (!document.querySelector('#btn-container-misc').classList.contains('hide')) {
         document.querySelector('#btn-container-misc').classList.add('hide')
       }
-    } else if (e_alter_lane_color.classList.contains('active')) {
-      // hider_columns(heat)
-      // selected_column = (selected_column === '') ? heat : ''
-      // document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
     }
   }
 }
-
-  /* 
-  Från start:
-    gömma rader:
-      round NOT active
-        => klicka på en heat
-    gömma kolumner:
-      round active
-      edit active
-        => klicka på en heat
-    visa rader
-      round NOT active
-        => klicka på en heat
-    visa kolumner
-        => klicka på edit
-      round active
-      edit active
-
-  När rader ÄR gömda:
-    gömma kolumner:
-      variable heat EJ tom
-        => klicka på round
-  */
 
 function calculate_sum_heat() {
   for (let x = 0; x < 2; x++) {
@@ -435,32 +313,4 @@ function count_driver_heats(driver, who) {
     }
   }
   return x
-}
-
-function check_button_containers() {
-  let btn_container_score = document.querySelector('#btn-container-score')
-  let btn_container_lanes_colors = document.querySelector('#btn-container-lanes-colors')
-
-  if (columns_are_hidden && selected_column !== '') {
-    if (btn_container_score.classList.contains('hide')) {
-      btn_container_score.classList.remove('hide')
-    }
-    if (!btn_container_lanes_colors.classList.contains('hide')) {
-      btn_container_lanes_colors.classList.add('hide')
-    }
-  } else if (columns_are_hidden && selected_column === '') {
-    if (btn_container_lanes_colors.classList.contains('hide')) {
-      btn_container_lanes_colors.classList.remove('hide')
-    }
-    if (!btn_container_score.classList.contains('hide')) {
-      btn_container_score.classList.add('hide')
-    }
-  } else {
-    if (!btn_container_score.classList.contains('hide')) {
-      btn_container_score.classList.add('hide')
-    }
-    if (!btn_container_lanes_colors.classList.contains('hide')) {
-      btn_container_lanes_colors.classList.add('hide')
-    }
-  }
 }

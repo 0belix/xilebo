@@ -33,7 +33,13 @@ function button_toggler(e) {
       document.querySelector('#btn-container-misc').classList.toggle('hide')
     } else {
       hider_columns(selected_column)
-      document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
+      if (document.querySelectorAll('.txtDeco').length > 0) {
+        document.querySelector('#btn-container-score').classList.toggle('hide')
+      } else {
+        if (!document.querySelector('#btn-container-lanes-colors').classList.contains('hide')) {
+          document.querySelector('#btn-container-lanes-colors').classList.add('hide')
+        }
+      }
     }
     if (document.querySelector('#btn-container-lanes-colors').classList.contains('hide') &&
         document.querySelector('#btn-container-score').classList.contains('hide') &&
@@ -173,7 +179,6 @@ function hider_rc(e) {
   let heat = parseInt(theID.replace(/\D/g, ''), 10)
   let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
   let e_round = document.querySelector('#butt_round')
-  let e_alter_lane_color = document.querySelector('#butt_alter_lane_color')
   if (theID.match(theRE)) {
     if (!e_round.classList.contains('active')) {
       if (selected_column === '' || selected_column === heat) {

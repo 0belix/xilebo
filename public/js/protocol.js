@@ -19,7 +19,7 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_heat() })
   $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
-  $('.containerFlex').on('click', (e) => { checker(e) })
+  $('.containerFlex').on('click', (e) => { hider_rc(e) })
   // $('.containerFlex').on('click', (e) => { hider_rows(e) })
   // $('.containerFlex').on('click', (e) => { hider_columns(e) })
 })
@@ -35,11 +35,17 @@ function button_toggler(e) {
   // e.target.classList.toggle('active')
   if (theID === 'butt_round') {
     e.target.classList.toggle('active')
-    if (selected_column !== '') {
-      hider_columns(selected_column)
-      document.querySelector('#btn-container-score').classList.toggle('hide')
-    } else {
+    if (selected_column === '') {
       document.querySelector('#btn-container-misc').classList.toggle('hide')
+    } else {
+      hider_columns(selected_column)
+      document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
+    }
+    if (document.querySelector('#btn-container-lanes-colors').classList.contains('hide') &&
+        document.querySelector('#btn-container-score').classList.contains('hide') &&
+       !document.querySelector('#butt_round').classList.contains('active') &&
+        document.querySelectorAll('.txtDeco').length === 0) {
+      selected_column = ''
     }
   } else if (theID === 'butt_reverse_lanes') {
     lane_changer(e)
@@ -55,8 +61,8 @@ function button_toggler(e) {
     d8_hider('_away')
     auto_button_hider(theID)
   } else if (theID === 'butt_alter_lane_color') {
-    e.target.classList.toggle('active')
-    if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {}
+    // e.target.classList.toggle('active')
+    // if (document.querySelector('#butt_alter_lane_color').classList.contains('active')) {}
   }
 }
 
@@ -259,7 +265,7 @@ function hider_rows(heat) {
   document.querySelector('.row_height_30').parentElement.classList.toggle('hide')
 }
 
-function checker(e) {
+function hider_rc(e) {
   let theID = e.target.id
   let heat = parseInt(theID.replace(/\D/g, ''), 10)
   let theRE = /(^h([1-9]|1[0-6])_home$|^h([1-9]|1[0-6])_away$)/g
@@ -269,9 +275,17 @@ function checker(e) {
     if (!e_round.classList.contains('active')) {
       hider_rows(heat)
       selected_column = (selected_column === '') ? heat : ''
-    } else if (e_alter_lane_color.classList.contains('active')) {
+    } else if (e_round.classList.contains('active') && selected_column === '') {
       hider_columns(heat)
       selected_column = (selected_column === '') ? heat : ''
+      document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
+      if (!document.querySelector('#btn-container-misc').classList.contains('hide')) {
+        document.querySelector('#btn-container-misc').classList.add('hide')
+      }
+    } else if (e_alter_lane_color.classList.contains('active')) {
+      // hider_columns(heat)
+      // selected_column = (selected_column === '') ? heat : ''
+      // document.querySelector('#btn-container-lanes-colors').classList.toggle('hide')
     }
   }
 }

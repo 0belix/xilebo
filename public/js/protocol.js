@@ -20,12 +20,16 @@ $(document).ready(() => {
   $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
   $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
   $('.containerFlex').on('click', (e) => { hider_rc(e) })
+  $('.containerFlex').on('click', (e) => { lane_color_toggler(e) })
+  $('.containerFlex').on('click', (e) => { scoring_toggler(e) })
 })
 
 let selected_column = ''
 let lane_direction = 'right'
 
 function button_toggler(e) {
+  let scoreRE = /^butt_([0-3]|[nfxrm]|f[nx]|tt|rr)$/g
+  let lcRE = /(^butt_l[1-4]$|^butt_c[rbyw]$)/g
   let theID = e.target.id
   e.target.classList.toggle('active')
   if (theID === 'butt_round') {
@@ -60,6 +64,25 @@ function button_toggler(e) {
   } else if (theID === 'butt_d8_away') {
     d8_hider('_away')
     auto_button_hider(theID)
+  } else if (theID.match(lcRE)) {
+    let butts = document.querySelectorAll('#btn-container-lanes-colors .btn-3d')
+    butts.forEach((butt) => {
+      if (butt.classList.contains('active')) {
+        if (butt.id !== theID) {
+          butt.classList.remove('active')
+          // setTimeout(() => { butt.classList.remove('active') }, 123)
+        }
+      }
+    })
+  } else if (theID.match(scoreRE)) {
+    let butts = document.querySelectorAll('#btn-container-score .btn-3d')
+    butts.forEach((butt) => {
+      if (butt.classList.contains('active')) {
+        if (butt.id !== theID) {
+          butt.classList.remove('active')
+        }
+      }
+    })
   }
 }
 
@@ -196,6 +219,50 @@ function hider_rc(e) {
   }
 }
 
+function lane_color_toggler(e) {
+  let element = e.target
+  let theID = element.id
+  let theRE = /(^d[1-8]h([1-9]|1[0-6])_home$|^d[1-8]h([1-9]|1[0-6])_away$)/g
+  let lRE = /^lane_[1-4]$/g
+  let cRE = /^color_[rbyw]$/g
+  if (theID.match(theRE)) {
+    let l = 0
+    let c = 0
+    for (let i = 0; i < element.classList.length; i++) { 
+      if (element.classList[i].match(lRE)) { l++ }
+      if (element.classList[i].match(cRE)) { c++ }
+    }
+    let butts = document.querySelectorAll('#btn-container-lanes-colors .btn-3d')
+    butts.forEach((butt) => {
+      if (butt.classList.contains('active')) {
+        let representerID = get_butt_representer(butt.id)
+        if (representerID.match(lRE) && (l === 0 || element.classList.contains(representerID))) { element.classList.toggle(representerID) } else
+        if (representerID.match(cRE) && (c === 0 || element.classList.contains(representerID))) { element.classList.toggle(representerID) }
+        // TODO: Only allow home/away their own color!
+        butt.classList.remove('active')
+      }
+    })
+  }
+}
+
+function scoring_toggler(e) {
+  let element = e.target
+  let theID = element.id
+  let theRE = /(^d[1-8]h([1-9]|1[0-6])_home$|^d[1-8]h([1-9]|1[0-6])_away$)/g
+  let contentRE = /^butt_([0-3]|[nfxrm]|f[nx]|tt|rr)$/g
+  if (theID.match(theRE)) {
+    let butts = document.querySelectorAll('#btn-container-score .btn-3d')
+    butts.forEach((butt) => {
+      if (butt.classList.contains('active')) {
+        let buttContent = get_butt_representer(butt.id)
+        if (element.textContent === '') { element.textContent = buttContent } else
+        if (element.textContent.match(buttContent)) { element.textContent = '' }
+        butt.classList.remove('active')
+      }
+    })
+  }
+}
+
 function calculate_sum_heat() {
   for (let x = 0; x < 2; x++) {
     let who = (x === 0) ? '_home' : '_away'
@@ -318,4 +385,28 @@ function count_driver_heats(driver, who) {
     }
   }
   return x
+}
+
+function get_butt_representer(theID) {
+  if (theID === 'butt_l1') { return 'lane_1' } else
+  if (theID === 'butt_l2') { return 'lane_2' } else
+  if (theID === 'butt_l3') { return 'lane_3' } else
+  if (theID === 'butt_l4') { return 'lane_4' } else
+  if (theID === 'butt_cr') { return 'color_r' } else
+  if (theID === 'butt_cb') { return 'color_b' } else
+  if (theID === 'butt_cy') { return 'color_y' } else
+  if (theID === 'butt_cw') { return 'color_w' } else
+  if (theID === 'butt_3') { return 3 } else
+  if (theID === 'butt_2') { return 2 } else
+  if (theID === 'butt_1') { return 1 } else
+  if (theID === 'butt_0') { return 0 } else
+  if (theID === 'butt_n') { return 'N' } else
+  if (theID === 'butt_fn') { return 'FN' } else
+  if (theID === 'butt_f') { return 'F' } else
+  if (theID === 'butt_fx') { return 'FX' } else
+  if (theID === 'butt_x') { return 'X' } else
+  if (theID === 'butt_tt') { return 'TT' } else
+  if (theID === 'butt_r') { return 'R' } else
+  if (theID === 'butt_rr') { return 'RR' } else
+  if (theID === 'butt_m') { return 'M' }
 }

@@ -636,10 +636,19 @@
 /* 3D Button Colors */
 #butt_round,
 .btn-3d {
-	background-color: #82c8a0;
-	box-shadow: 0 0 0 0.085vh #82c8a0 inset,
+	background-color: rgba(130, 200, 160, 1);
+	box-shadow: 0 0 0 0.085vh rgba(130, 200, 160, 1) inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
 		0 0.85vh 0 0 rgba(126, 194, 155, .7),
+		0 0.85vh 0 0.085vh rgba(0,0,0,.4),
+		0 0.85vh 0.85vh 0.085vh rgba(0,0,0,0.5);
+}
+
+.used {
+	background-color: rgba(200, 200, 200, 1);
+	box-shadow: 0 0 0 0.085vh rgba(200, 200, 200, 1) inset,
+		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
+		0 0.85vh 0 0 rgba(192, 192, 192, .7),
 		0 0.85vh 0 0.085vh rgba(0,0,0,.4),
 		0 0.85vh 0.85vh 0.085vh rgba(0,0,0,0.5);
 }
@@ -647,7 +656,13 @@
 /* 3D Button Colors Active */
 #butt_round.active,
 .btn-3d.active {
-  box-shadow: 0 0 0 0.085vh #82c8a0 inset,
+  box-shadow: 0 0 0 0.085vh rgba(130, 200, 160, 1) inset,
+		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
+		0 0 0 0.085vh rgba(0,0,0,0.4);
+}
+
+.used.active {
+  box-shadow: 0 0 0 0.085vh rgba(200, 200, 200, 1) inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
 		0 0 0 0.085vh rgba(0,0,0,0.4);
 }

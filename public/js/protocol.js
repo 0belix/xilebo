@@ -15,17 +15,33 @@
 // })
 
 $(document).ready(() => {
-  $('.btn-container').on('click', (e) => { button_toggler(e) })
-  $('.containerFlex').on('click', (e) => { calculate_sum_heat() })
-  $('.containerFlex').on('click', (e) => { calculate_sum_driver() })
-  $('.containerFlex').on('click', (e) => { calculate_bonus_driver() })
+  $('.containerFlex').on('dblclick', (e) => { edit_spectator(e) })
   $('.containerFlex').on('click', (e) => { hider_rc(e) })
   $('.containerFlex').on('click', (e) => { lane_color_toggler(e) })
   $('.containerFlex').on('click', (e) => { scoring_toggler(e) })
+  $('.btn-container').on('click', (e) => { button_toggler(e) })
+  calcy()
 })
 
-let selected_column = ''
 let lane_direction = 'right'
+let selected_column = ''
+let h16_hidden = true
+let d8_home_hidden = true
+let d8_away_hidden = true
+
+function calcy() {
+  calculate_sum_heat()
+  calculate_sum_driver()
+  calculate_bonus_driver()
+}
+
+function edit_spectator(e) {
+  let theE = e.target
+  let theID = theE.id
+  if (theID === 'spectator') {
+    alert(theE.textContent)
+  }
+}
 
 function button_toggler(e) {
   let scoreRE = /^butt_([0-3]|[nfxrm]|f[nx]|tt|rr)$/g
@@ -39,6 +55,9 @@ function button_toggler(e) {
       hider_columns(selected_column)
       if (document.querySelectorAll('.txtDeco').length > 0) {
         document.querySelector('#btn-container-score').classList.toggle('hide')
+        if (!document.querySelector('#btn-container-score').classList.contains('hide')) {
+          used_point_button()
+        }
       } else {
         if (!document.querySelector('#btn-container-lanes-colors').classList.contains('hide')) {
           document.querySelector('#btn-container-lanes-colors').classList.add('hide')
@@ -56,12 +75,15 @@ function button_toggler(e) {
     lane_direction = (lane_direction === 'right') ? 'left' : 'right'
     auto_button_hider(theID)
   } else if (theID === 'butt_h16') {
+    h16_hidden = (h16_hidden) ? false : true
     hider_h16()
     auto_button_hider(theID)
   } else if (theID === 'butt_d8_home') {
+    d8_home_hidden = (d8_home_hidden) ? false : true
     d8_hider('_home')
     auto_button_hider(theID)
   } else if (theID === 'butt_d8_away') {
+    d8_away_hidden = (d8_away_hidden) ? false : true
     d8_hider('_away')
     auto_button_hider(theID)
   } else if (theID.match(lcRE)) {
@@ -144,10 +166,9 @@ function hider_columns(heat) {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
     let sbh = true
-    for (let j = 1; j <= 15; j++) {
-      if (heat === j) {
-        continue
-      }
+    for (let j = 1; j <= 16; j++) {
+      if (heat === j) { continue }
+      if (j === 16 && h16_hidden) { continue }
       document.querySelector('#h' + j + '' + where).classList.toggle('hide')
       for (let i = 1; i <= 8; i++) {
         document.querySelector('#d' + i + 'h' + j + '' + where).classList.toggle('hide')
@@ -184,8 +205,9 @@ function hider_rows(heat) {
   for (let x = 0; x < 2; x++) {
     let where = (x === 0) ? '_home' : '_away'
     document.querySelector('#h' + heat + where).classList.toggle('txtDeco')
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 8; i++) {
       let element = document.querySelector('#d' + i + 'h' + heat + where)
+      if (i === 8 && ((where ==='_home' && d8_home_hidden) || (where ==='_away' && d8_away_hidden))) { continue }
       if (!(element.classList.contains('color_r') ||
             element.classList.contains('color_b') ||
             element.classList.contains('color_y') ||
@@ -222,23 +244,35 @@ function hider_rc(e) {
 function lane_color_toggler(e) {
   let element = e.target
   let theID = element.id
-  let theRE = /(^d[1-8]h([1-9]|1[0-6])_home$|^d[1-8]h([1-9]|1[0-6])_away$)/g
+  let theRE_home = /^d[1-8]h([1-9]|1[0-6])_home$/g
+  let theRE_away = /^d[1-8]h([1-9]|1[0-6])_away$/g
   let lRE = /^lane_[1-4]$/g
-  let cRE = /^color_[rbyw]$/g
-  if (theID.match(theRE)) {
+  let cRE_home = /^color_[rb]$/g
+  let cRE_away = /^color_[yw]$/g
+  if (theID.match(theRE_home) || theID.match(theRE_away)) {
     let l = 0
-    let c = 0
+    let c_home = 0
+    let c_away = 0
     for (let i = 0; i < element.classList.length; i++) { 
       if (element.classList[i].match(lRE)) { l++ }
-      if (element.classList[i].match(cRE)) { c++ }
+      if (element.classList[i].match(cRE_home)) { c_home++ }
+      if (element.classList[i].match(cRE_away)) { c_away++ }
     }
     let butts = document.querySelectorAll('#btn-container-lanes-colors .btn-3d')
     butts.forEach((butt) => {
       if (butt.classList.contains('active')) {
         let representerID = get_butt_representer(butt.id)
-        if (representerID.match(lRE) && (l === 0 || element.classList.contains(representerID))) { element.classList.toggle(representerID) } else
-        if (representerID.match(cRE) && (c === 0 || element.classList.contains(representerID))) { element.classList.toggle(representerID) }
-        // TODO: Only allow home/away their own color!
+        if (representerID.match(lRE) && (l === 0 || element.classList.contains(representerID))) {
+          element.classList.toggle(representerID)
+        } else if (theID.match(theRE_home)) {
+          if (representerID.match(cRE_home) && (c_home === 0 || element.classList.contains(representerID))) {
+            element.classList.toggle(representerID)
+          }
+        } else if (theID.match(theRE_away)) {
+          if (representerID.match(cRE_away) && (c_away === 0 || element.classList.contains(representerID))) {
+            element.classList.toggle(representerID)
+          }
+        }
         butt.classList.remove('active')
       }
     })
@@ -255,12 +289,70 @@ function scoring_toggler(e) {
     butts.forEach((butt) => {
       if (butt.classList.contains('active')) {
         let buttContent = get_butt_representer(butt.id)
-        if (element.textContent === '') { element.textContent = buttContent } else
-        if (element.textContent.match(buttContent)) { element.textContent = '' }
+        if (element.textContent === '') {
+          if (!used_point(buttContent)) {
+            element.textContent = buttContent
+          }
+        } else if (element.textContent.match(buttContent)) {
+          element.textContent = ''
+        }
         butt.classList.remove('active')
+        used_point_button()
+        calcy()
       }
     })
   }
+}
+
+function used_point_button() {
+  if (document.querySelector('#butt_3').classList.contains('used')) {
+    document.querySelector('#butt_3').classList.remove('used')
+  }
+  if (document.querySelector('#butt_2').classList.contains('used')) {
+    document.querySelector('#butt_2').classList.remove('used')
+  }
+  if (document.querySelector('#butt_1').classList.contains('used')) {
+    document.querySelector('#butt_1').classList.remove('used')
+  }
+  if (document.querySelector('#butt_0').classList.contains('used')) {
+    document.querySelector('#butt_0').classList.remove('used')
+  }
+
+  for (let x = 0; x < 2; x++) {
+    let where = (x === 0) ? '_home' : '_away'
+    for (let i = 1; i <= 8; i++) {
+      let element = document.querySelector('#d' + i + 'h' + selected_column + where)
+      if (element.textContent.match(3)) {
+        if (!document.querySelector('#butt_3').classList.contains('used')) {
+          document.querySelector('#butt_3').classList.add('used')
+        }
+      } else if (element.textContent.match(2)) {
+        if (!document.querySelector('#butt_2').classList.contains('used')) {
+          document.querySelector('#butt_2').classList.add('used')
+        }
+      } else if (element.textContent.match(1)) {
+        if (!document.querySelector('#butt_1').classList.contains('used')) {
+          document.querySelector('#butt_1').classList.add('used')
+        }
+      } else if (element.textContent.match(0)) {
+        if (!document.querySelector('#butt_0').classList.contains('used')) {
+          document.querySelector('#butt_0').classList.add('used')
+        }
+      }
+    }
+  }
+}
+
+function used_point(n) {
+  for (let x = 0; x < 2; x++) {
+    let where = (x === 0) ? '_home' : '_away'
+    for (let i = 1; i <= 8; i++) {
+      if (document.querySelector('#d' + i + 'h' + selected_column + where).textContent.match(n)) {
+        return true
+      }
+    }
+  }
+  return false
 }
 
 function calculate_sum_heat() {

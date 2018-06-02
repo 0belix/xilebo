@@ -22,53 +22,6 @@
   text-decoration: underline overline double blue !important;
 }
 
-.myButton {
-	-moz-box-shadow: 0px 0px 13px 0px #000000;
-	-webkit-box-shadow: 0px 0px 13px 0px #000000;
-	box-shadow: 0px 0px 13px 0px #000000;
-	background-color:#f5ebdc;
-	-moz-border-radius:13px;
-	-webkit-border-radius:13px;
-	border-radius:13px;
-	border:1px solid #000000;
-	display:inline-block;
-	cursor:pointer;
-	color:#000000;
-	font-size:20px;
-	font-weight:bold;
-	padding:13px 39px;
-	text-decoration:none;
-}
-
-#arrow {
-  display: block;
-  position: absolute;
-  right: 3.5vw;
-  top: 38vh;
-  width: 6.5vw;
-  z-index: 3;
-}
-
-.round {
-  display: block;
-  position: absolute;
-  right: 3.5vw;
-  bottom: 4vh;
-  width: 6.5vw;
-  height: 10vh;
-  padding-top: 30px;		
-  text-align: center;
-  font-size: 25px;		
-  text-shadow: 0 1px 0 rgba(255,255,255,.7);
-  letter-spacing: -.065em;
-  transition: all .25s ease-in-out;
-  box-shadow: 2px 2px 7px rgba(0,0,0,.2);
-  border-radius: 50%;
-  z-index: 2;
-  border-width: 4px;
-  border-style: solid;
-}
-
 .z-1 {
   z-index: -1;
 }
@@ -380,41 +333,56 @@
   user-select: none;
 }
 
-#btn-container-round {
+#btn-container-round,
+#btn-container-spectator-back,
+#btn-container-spectator,
+#btn-container-misc,
+#btn-container-lanes-colors,
+#btn-container-score {
   position: absolute;
   z-index: 2;
-  right: 4vw;
-  bottom: 4vh;
-  width: 6vw;
-  height: 13vh;
-  /* background-color: rgba(0,0,0,0.15); */
   border-radius: 0.3vw;
 	text-align: center;
 }
 
+#btn-container-round {
+  right: 4vw;
+  bottom: 4vh;
+  width: 6vw;
+  height: 13vh;
+}
+
+#btn-container-spectator-back {
+  top: 30vh;
+  left: 30vw;
+  width: 40vw;
+  height: 40vh;
+  background-color: rgba(0,0,0,0.69);
+}
+
+#btn-container-spectator {
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background-color: var(--white-smoke);
+}
+
 #btn-container-misc {
-  position: absolute;
-  z-index: 2;
   top: 10vh;
   right: 2.5vw;
   width: 9vw;
   height: 60vh;
   background-color: rgba(0,0,0,0.69);
-  border-radius: 0.3vw;
-	text-align: center;
 }
 
 #btn-container-lanes-colors,
 #btn-container-score {
-  position: absolute;
-  z-index: 2;
   top: 3vh;
   left: 40vw;
   width: 36.1vw;
   height: 37.7vh;
   /* background-color: var(--white-smoke); */
-  border-radius: 0.3vw;
-	text-align: center;
 }
 
 /* 3D Styles */
@@ -465,7 +433,7 @@
   left: 1.5vw;
 }
 
-#butt_alter_lane_color {
+#butt_spectator {
   top: 46vh;
   left: 1.5vw;
 }
@@ -565,7 +533,7 @@
   top: 35vh;
 }
 
-#butt_alter_lane_color.active {
+#butt_spectator.active {
   top: 47vh;
 }
 

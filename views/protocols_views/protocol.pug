@@ -568,8 +568,8 @@ block content
       .cell_width_8.cell_height_4.border_none#track_record 61,2
       .cell_width_2.cell_height_4.color_p.border_bottom.rotate
         div TID
-      .cell_width_3.cell_height_4.color_p.border_bottom.border_thick#h1_time 62,5
-      .cell_width_3.cell_height_4.color_p.border_bottom#h2_time 64,1
+      .cell_width_3.cell_height_4.color_p.border_bottom.border_thick#h1_time 62.5
+      .cell_width_3.cell_height_4.color_p.border_bottom#h2_time 64.1
       .cell_width_3.cell_height_4.color_p.border_bottom#h3_time
       .cell_width_3.cell_height_4.color_p.border_bottom#h4_time
       .cell_width_3.cell_height_4.color_p.border_bottom.border_thick#h5_time
@@ -602,8 +602,17 @@ block content
     .btn-3d#butt_d8_home Förare 8, hemma
     .btn-3d#butt_d8_away Förare 8, borta
     .btn-3d#butt_spectator Publiksiffra
-  #btn-container-spectator-back.btn-container
-    #btn-container-spectator.btn-container
+  #btn-container-input-back.btn-container.hide
+    #btn-container-input.btn-container
+      label#input_label(for='input_box')
+      br
+      br
+      input#input_box(type='number', min='0', step='1', autocomplete='off', placeholder=' 0', autofocus='')
+      br
+      br
+      button#btn-cancel Avbryt
+      .divider
+      button#btn-submit Spara
   #btn-container-lanes-colors.btn-container.hide
     .btn-3d#butt_l1 Spår 1
     .btn-3d#butt_l2 Spår 2
@@ -627,3 +636,4 @@ block content
     .btn-3d#butt_r R
     .btn-3d#butt_rr RR
     .btn-3d#butt_m M
+    .btn-3d#butt_time Heat tid

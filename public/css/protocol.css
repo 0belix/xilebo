@@ -328,14 +328,20 @@
   content: "4";
 }
 
+.divider {
+  width:1.6vw;
+  height:auto;
+  display:inline-block;
+}
+
 /* 3D Buttons from https://codepen.io/AMKohn/details/FkzaD */
 .btn-container {
   user-select: none;
 }
 
 #btn-container-round,
-#btn-container-spectator-back,
-#btn-container-spectator,
+#btn-container-input-back,
+#btn-container-input,
 #btn-container-misc,
 #btn-container-lanes-colors,
 #btn-container-score {
@@ -352,7 +358,8 @@
   height: 13vh;
 }
 
-#btn-container-spectator-back {
+#btn-container-input-back {
+  z-index: 3;
   top: 30vh;
   left: 30vw;
   width: 40vw;
@@ -360,12 +367,49 @@
   background-color: rgba(0,0,0,0.69);
 }
 
-#btn-container-spectator {
+#btn-container-input {
   top: 25%;
   left: 25%;
   width: 50%;
-  height: 50%;
+  height: 38%;
   background-color: var(--white-smoke);
+  padding: 3% 0;
+  font-size: 2rem;
+  line-height: 1.1rem;
+}
+
+#input_box {
+  width: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.3vw;
+}
+
+#btn-container-input button {
+  cursor: pointer;
+  width: 30%;
+  height: 34%;
+  text-align: center;
+  font-size: 1.3rem;
+  border-radius: 40vw;
+  /* border-style: double; */
+  background: transparent;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#btn-container-input button:focus {
+  outline: none;
+}
+
+#btn-submit {
+  color: steelblue;
+  border: 0.2vw solid steelblue;
+}
+
+#btn-cancel {
+  color: lightsteelblue;
+  border: 0.2vw solid lightsteelblue;
 }
 
 #btn-container-misc {
@@ -382,7 +426,6 @@
   left: 40vw;
   width: 36.1vw;
   height: 37.7vh;
-  /* background-color: var(--white-smoke); */
 }
 
 /* 3D Styles */
@@ -410,6 +453,10 @@
 	text-align: center;
 	transition: all .08s linear;
 	text-shadow: 0 0.13vw 0 rgba(0,0,0,0.15);
+}
+
+[id*='butt_'] {
+  cursor: pointer;
 }
 
 /* 3D button placement */
@@ -460,6 +507,11 @@
 #butt_l4,
 #butt_0 {
   top: 30vh;
+  left: 0vw;
+}
+
+#butt_time {
+  top: 40vh;
   left: 0vw;
 }
 
@@ -517,6 +569,11 @@
 }
 
 /* 3D Button Active */
+[id*='butt_'].active {
+  transform: translateY(1vh);
+}
+
+/* 
 #butt_reverse_lanes.active {
   top: 3vh;
 }
@@ -600,6 +657,7 @@
 #butt_rr.active {
   top: 21vh;
 }
+*/
 
 /* 3D Button Colors */
 #butt_round,
@@ -608,6 +666,15 @@
 	box-shadow: 0 0 0 0.085vh rgba(130, 200, 160, 1) inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
 		0 0.85vh 0 0 rgba(126, 194, 155, .7),
+		0 0.85vh 0 0.085vh rgba(0,0,0,.4),
+		0 0.85vh 0.85vh 0.085vh rgba(0,0,0,0.5);
+}
+
+#butt_time {
+  background-color: rgb(174, 130, 200);
+	box-shadow: 0 0 0 0.085vh rgba(174, 130, 200, 1) inset,
+		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
+		0 0.85vh 0 0 rgba(164, 120, 190, .7),
 		0 0.85vh 0 0.085vh rgba(0,0,0,.4),
 		0 0.85vh 0.85vh 0.085vh rgba(0,0,0,0.5);
 }
@@ -625,6 +692,12 @@
 #butt_round.active,
 .btn-3d.active {
   box-shadow: 0 0 0 0.085vh rgba(130, 200, 160, 1) inset,
+		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
+		0 0 0 0.085vh rgba(0,0,0,0.4);
+}
+
+#butt_time.active {
+  box-shadow: 0 0 0 0.085vh rgba(174, 130, 200, 1) inset,
 		0 0 0 0.17vh rgba(255,255,255,0.15) inset,
 		0 0 0 0.085vh rgba(0,0,0,0.4);
 }

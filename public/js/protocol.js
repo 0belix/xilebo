@@ -1,6 +1,7 @@
 // 'use strict'
 
 // $(document).ready(() => {
+  // $('.containerFlex').on('dblclick', (e) => { edit_spectator(e) })
 //   $('a').click((e) => { e.preventDefault() })
 //   $('.containerFlex').on('click', (e) => {
 //     if (e.shiftKey) {
@@ -15,19 +16,20 @@
 // })
 
 $(document).ready(() => {
-  $('.containerFlex').on('dblclick', (e) => { edit_spectator(e) })
+  $('.containerFlex').on('click', (e) => { e.stopPropagation() })
   $('.containerFlex').on('click', (e) => { hider_rc(e) })
   $('.containerFlex').on('click', (e) => { lane_color_toggler(e) })
   $('.containerFlex').on('click', (e) => { scoring_toggler(e) })
+  $('.btn-container').on('click', (e) => { e.stopPropagation() })
   $('.btn-container').on('click', (e) => { button_toggler(e) })
   calcy()
 })
 
 let lane_direction = 'right'
 let selected_column = ''
-let h16_hidden = true
 let d8_home_hidden = true
 let d8_away_hidden = true
+let h16_hidden = true
 
 function calcy() {
   calculate_sum_heat()
@@ -35,11 +37,23 @@ function calcy() {
   calculate_bonus_driver()
 }
 
-function edit_spectator(e) {
-  let theE = e.target
-  let theID = theE.id
-  if (theID === 'spectator') {
-    alert(theE.textContent)
+function input_box_handler(theID) {
+  // debugger
+  let spectatorNO = document.querySelector('#btn-container-input-back')
+  let spectatorBOX = document.querySelector('#input_box')
+  if (theID === 'btn-cancel') {
+    spectatorBOX.value = ''
+    if (!spectatorNO.classList.contains('hide')) {
+      spectatorNO.classList.add('hide')
+    }
+  } else if (theID === 'btn-submit') {
+    if (document.querySelector('#input_label').textContent === 'Ange publiksiffran:') {
+      document.querySelector('#spectator').textContent = spectatorBOX.value
+    } else {
+      document.querySelector('#h' + selected_column + '_time').textContent = spectatorBOX.value
+    }
+    spectatorBOX.value = ''
+    spectatorNO.classList.add('hide')
   }
 }
 
@@ -105,6 +119,24 @@ function button_toggler(e) {
         }
       }
     })
+  } else if (theID === 'butt_spectator' || theID === 'butt_time') {
+    let spectatorNO = document.querySelector('#btn-container-input-back')
+    if (spectatorNO.classList.contains('hide')) {
+      spectatorNO.classList.remove('hide')
+      if (theID === 'butt_time') {
+        document.querySelector('#input_label').textContent = 'Ange tiden för Heat ' + selected_column + ':'
+        document.querySelector('#input_box').step = '0.1'
+        document.querySelector('#input_box').value = parseFloat(document.querySelector('#h' + selected_column + '_time').textContent.replace(/[,]/, '.'))
+        setTimeout(() => { document.querySelector('#butt_time').classList.remove('active') }, 123)
+      } else {
+        document.querySelector('#input_label').textContent = 'Ange publiksiffran:'
+        document.querySelector('#input_box').step = '1'
+        document.querySelector('#input_box').value = document.querySelector('#spectator').textContent
+        auto_button_hider(theID)
+      }
+    }
+  } else if (theID === 'btn-cancel' || theID === 'btn-submit') {
+    input_box_handler(theID)
   }
 }
 

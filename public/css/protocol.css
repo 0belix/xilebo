@@ -134,13 +134,6 @@
   flex-basis: calc(var(--cell-width) * 51);
 }
 
-/*.containerFlex :nth-child(11) .cell_width_20,
-.containerFlex :nth-child(12) .cell_width_20,
-.containerFlex :nth-child(23) .cell_width_20,
-.containerFlex :nth-child(24) .cell_width_20 {
-  flex-basis: calc(var(--cell-width) * 20 - 0.01vw);
-}*/
-
 .containerFlex :nth-child(11) .cell_width_20::before,
 .containerFlex :nth-child(23) .cell_width_20::before {
   content: "Lagl:\A0";
@@ -372,6 +365,7 @@
   left: 25%;
   width: 50%;
   height: 38%;
+  border: groove 0.1vw steelblue;
   background-color: var(--white-smoke);
   padding: 3% 0;
   font-size: 2rem;
@@ -393,8 +387,7 @@
   text-align: center;
   font-size: 1.3rem;
   border-radius: 40vw;
-  /* border-style: double; */
-  background: transparent;
+  background: var(--white-smoke);
   box-shadow: 0 0.3vw 2vh 0 rgba(0,0,0,0.2), 0 0.3vw 2vh 0 rgba(0,0,0,0.19);
 }
 
@@ -404,12 +397,12 @@
 
 #btn-submit {
   color: steelblue;
-  border: 0.2vw solid steelblue;
+  border: solid 0.2vw steelblue;
 }
 
 #btn-cancel {
   color: lightsteelblue;
-  border: 0.2vw solid lightsteelblue;
+  border: solid 0.2vw lightsteelblue;
 }
 
 #btn-container-misc {
@@ -572,92 +565,6 @@
 [id*='butt_'].active {
   transform: translateY(1vh);
 }
-
-/* 
-#butt_reverse_lanes.active {
-  top: 3vh;
-}
-
-#butt_h16.active {
-  top: 13vh;
-}
-
-#butt_d8_home.active {
-  top: 23vh;
-}
-
-#butt_d8_away.active {
-  top: 35vh;
-}
-
-#butt_spectator.active {
-  top: 47vh;
-}
-
-#butt_round.active,
-#butt_l1.active,
-#butt_3.active {
-  top: 1vh;
-}
-
-#butt_l2.active,
-#butt_2.active {
-  top: 11vh;
-}
-
-#butt_l3.active,
-#butt_1.active {
-  top: 21vh;
-}
-
-#butt_l4.active,
-#butt_0.active {
-  top: 31vh;
-}
-
-#butt_cr.active,
-#butt_f.active {
-  top: 1vh;
-}
-
-#butt_cb.active,
-#butt_tt.active {
-  top: 11vh;
-}
-
-#butt_cy.active,
-#butt_n.active {
-  top: 21vh;
-}
-
-#butt_cw.active {
-  top: 31vh;
-}
-
-#butt_fx.active {
-  top: 1vh;
-}
-
-#butt_r.active {
-  top: 11vh;
-}
-
-#butt_x.active {
-  top: 1vh;
-}
-
-#butt_fn.active {
-  top: 21vh;
-}
-
-#butt_m.active {
-  top: 11vh;
-}
-
-#butt_rr.active {
-  top: 21vh;
-}
-*/
 
 /* 3D Button Colors */
 #butt_round,
